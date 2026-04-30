@@ -58,23 +58,9 @@ import ProductCard from '../ProductCard/ProductCard';
 const Home = () => {
     const navigate = useNavigate();
     const scrollRef = useRef(null);
+    const popularScrollRef = useRef(null);
     const theme = useTheme();
     const isMobile = useMediaQuery(theme.breakpoints.down('md'));
-
-    useEffect(() => {
-        if (!isMobile) return;
-        const interval = setInterval(() => {
-            if (scrollRef.current) {
-                const { scrollLeft, scrollWidth, clientWidth } = scrollRef.current;
-                if (scrollLeft + clientWidth >= scrollWidth - 10) {
-                    scrollRef.current.scrollTo({ left: 0, behavior: 'smooth' });
-                } else {
-                    scrollRef.current.scrollBy({ left: 260, behavior: 'smooth' });
-                }
-            }
-        }, 3000);
-        return () => clearInterval(interval);
-    }, [isMobile]);
 
     const categories = [
         { name: 'Gimbal', img: cat1, path: '/gimbals' },
@@ -154,6 +140,58 @@ const Home = () => {
             text: `"The drone I purchased from this site is fantastic! The build quality is excellent, and it performs just as described. Highly recommend!"`
         }
     ];
+
+    useEffect(() => {
+        if (!isMobile) return;
+
+        const scrollAmount = 260; // Standardize scroll increment
+
+        const dealsInterval = setInterval(() => {
+            if (scrollRef.current) {
+                const el = scrollRef.current;
+                const originLen = hotDeals.length;
+
+                if (el.children.length > originLen) {
+                    const shiftDist = el.children[originLen].offsetLeft;
+
+                    if (el.scrollLeft >= shiftDist - 10) {
+                        el.scrollTo({ left: el.scrollLeft - shiftDist, behavior: 'auto' });
+                        setTimeout(() => {
+                            el.scrollBy({ left: scrollAmount, behavior: 'smooth' });
+                        }, 50);
+                    } else {
+                        el.scrollBy({ left: scrollAmount, behavior: 'smooth' });
+                    }
+                }
+            }
+        }, 3000);
+
+        // Add matching seamless loop for Popular Products
+        const popInterval = setInterval(() => {
+            if (popularScrollRef.current) {
+                const el = popularScrollRef.current;
+                const originLen = popularProducts.length;
+
+                if (el.children.length > originLen) {
+                    const shiftDist = el.children[originLen].offsetLeft;
+
+                    if (el.scrollLeft >= shiftDist - 10) {
+                        el.scrollTo({ left: el.scrollLeft - shiftDist, behavior: 'auto' });
+                        setTimeout(() => {
+                            el.scrollBy({ left: scrollAmount, behavior: 'smooth' });
+                        }, 50);
+                    } else {
+                        el.scrollBy({ left: scrollAmount, behavior: 'smooth' });
+                    }
+                }
+            }
+        }, 3000);
+
+        return () => {
+            clearInterval(dealsInterval);
+            clearInterval(popInterval);
+        };
+    }, [isMobile, hotDeals.length, popularProducts.length]);
 
     return (
         <Box sx={{
@@ -321,7 +359,7 @@ const Home = () => {
                                     alignItems: 'center',
                                     cursor: 'pointer',
                                     width: '100%',
-                                    maxWidth: '290px',
+                                    maxWidth: '293px',
                                     zoom: { md: 0.75, lg: 1 },
                                     '&:hover img': {
                                         transform: 'scale(1.05)',
@@ -519,9 +557,9 @@ const Home = () => {
                                 scrollSnapAlign: isMobile ? 'center' : 'none'
                             }
                         }}>
-                        {hotDeals.map((deal, index) => (
+                        {[...hotDeals, ...hotDeals].map((deal, index) => (
                             <ProductCard
-                                key={index}
+                                key={`deal-${index}`}
                                 product={deal}
                                 containerSx={{
                                     width: { xs: '240px', md: '273px' },
@@ -551,21 +589,27 @@ const Home = () => {
                     Popular Products
                 </Typography>
 
-                <Box sx={{
-                    display: 'flex',
-                    gap: 3,
-                    flexWrap: 'nowrap',
-                    overflowX: 'auto',
-                    width: '100%',
-                    pb: 1,
-                    cursor: 'grab',
-                    '&::-webkit-scrollbar': { display: 'none' },
-                    msOverflowStyle: 'none',
-                    scrollbarWidth: 'none',
-                }}>
-                    {popularProducts.map((product, index) => (
+                <Box
+                    ref={popularScrollRef}
+                    sx={{
+                        display: 'flex',
+                        gap: 3,
+                        flexWrap: 'nowrap',
+                        overflowX: 'auto',
+                        width: '100%',
+                        pb: 1,
+                        cursor: 'grab',
+                        '&::-webkit-scrollbar': { display: 'none' },
+                        msOverflowStyle: 'none',
+                        scrollbarWidth: 'none',
+                        scrollSnapType: isMobile ? 'x mandatory' : 'none',
+                        '& > *': {
+                            scrollSnapAlign: isMobile ? 'center' : 'none'
+                        }
+                    }}>
+                    {[...popularProducts, ...popularProducts].map((product, index) => (
                         <ProductCard
-                            key={index}
+                            key={`popular-${index}`}
                             product={product}
                             containerSx={{
                                 width: { xs: '240px', md: '273px' },
@@ -777,7 +821,7 @@ const Home = () => {
             <Box component="section" sx={{
                 width: '100%',
                 maxWidth: '1241px',
-                px: { xs: 2, md: 0 },
+                px: { xs: 2, md: 2 },
                 mb: { xs: '50px', md: '100px' },
                 display: 'flex',
                 flexDirection: 'column',
@@ -851,33 +895,48 @@ const Home = () => {
             <Box component="section" sx={{
                 width: '100%',
                 maxWidth: '1241px',
-                px: { xs: 2, md: 0 },
+                boxSizing: 'border-box',
+                px: { xs: 2, md: 3 },
                 mb: { xs: '50px', md: '100px' },
                 display: 'flex',
-                flexDirection: { xs: 'column', lg: 'row' },
-                alignItems: { xs: 'center', lg: 'flex-start' },
+                flexDirection: { xs: 'column', md: 'row' },
+                alignItems: { xs: 'center', md: 'flex-start' },
                 justifyContent: 'space-between',
                 mx: 'auto',
-                gap: 3
+                gap: 3,
+                overflow: 'hidden',
+                maxWidth: '100vw'
             }}>
-                <Box sx={{ width: { xs: '100%', lg: '320px' }, flexShrink: 0, textAlign: { xs: 'center', lg: 'left' }, pr: { xs: 0, lg: 2 } }}>
-                    <Typography sx={{ fontSize: '1.2rem', fontWeight: 600, color: '#777', fontFamily: 'Poppins' }}>
+                <Box sx={{
+                    width: { xs: '100%', sm: '80%', md: '300px', lg: '320px' },
+                    maxWidth: { xs: '450px', sm: '600px', md: 'none' },
+                    flexShrink: 0,
+                    textAlign: { xs: 'center', md: 'left' },
+                    boxSizing: 'border-box',
+                    pr: { md: 3, lg: 5 },
+                    mb: { xs: 4, md: 0 },
+                    mx: { xs: 'auto', md: 0 }
+                }}>
+                    <Typography sx={{ fontSize: { xs: '15px', sm: '17px', md: '19px' }, fontWeight: 600, color: '#777', fontFamily: 'Poppins' }}>
                         Why shop with
                     </Typography>
-                    <Typography variant="h2" sx={{ fontSize: '2.5rem', fontWeight: 800, fontFamily: 'Poppins', mb: 2 }}>
+                    <Typography variant="h2" sx={{ fontSize: { xs: '32px', sm: '38px', md: '44px' }, fontWeight: 800, fontFamily: 'Poppins', mb: { xs: 1.5, md: 2 } }}>
                         SPK <span style={{ color: '#F66A74' }}>STORE</span>
                     </Typography>
-                    <Typography sx={{ fontSize: '0.9rem', color: '#777', lineHeight: 1.6, fontFamily: 'Poppins' }}>
+                    <Typography sx={{ fontSize: { xs: '12px', sm: '14px', md: '14.5px' }, color: '#777', lineHeight: 1.6, fontFamily: 'Poppins', textAlign: 'center' }}>
                         Established in 2021, SPK Store has quickly emerged as a trusted retailer specializing in cutting-edge technology products. We pride ourselves on offering a diverse range of items including gimbals, drones, cameras, and various electronic devices. Our commitment to exceptional customer service and robust warranty support distinguishes us as a preferred choice among tech enthusiasts.
                     </Typography>
                 </Box>
 
                 <Box sx={{
                     flex: 1,
+                    width: { xs: '100%', md: 'auto' },
+                    maxWidth: '100%',
+                    minWidth: 0,
                     display: 'flex',
                     overflowX: 'auto',
                     gap: '24px',
-                    justifyContent: 'space-between',
+                    justifyContent: { xs: 'flex-start', md: 'space-between' },
                     pb: 0,
                     '&::-webkit-scrollbar': { display: 'none' },
                     msOverflowStyle: 'none',
