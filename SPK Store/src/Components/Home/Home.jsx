@@ -59,6 +59,7 @@ const Home = () => {
     const navigate = useNavigate();
     const scrollRef = useRef(null);
     const popularScrollRef = useRef(null);
+    const testimonialsScrollRef = useRef(null);
     const theme = useTheme();
     const isMobile = useMediaQuery(theme.breakpoints.down('md'));
 
@@ -187,11 +188,33 @@ const Home = () => {
             }
         }, 3000);
 
+        // Add matching seamless loop for Testimonials
+        const testInterval = setInterval(() => {
+            if (testimonialsScrollRef.current) {
+                const el = testimonialsScrollRef.current;
+                const originLen = testimonials.length;
+
+                if (el.children.length > originLen) {
+                    const shiftDist = el.children[originLen].offsetLeft;
+
+                    if (el.scrollLeft >= shiftDist - 10) {
+                        el.scrollTo({ left: el.scrollLeft - shiftDist, behavior: 'auto' });
+                        setTimeout(() => {
+                            el.scrollBy({ left: 313, behavior: 'smooth' });
+                        }, 50);
+                    } else {
+                        el.scrollBy({ left: 313, behavior: 'smooth' });
+                    }
+                }
+            }
+        }, 3000);
+
         return () => {
             clearInterval(dealsInterval);
             clearInterval(popInterval);
+            clearInterval(testInterval);
         };
-    }, [isMobile, hotDeals.length, popularProducts.length]);
+    }, [isMobile, hotDeals.length, popularProducts.length, testimonials.length]);
 
     return (
         <Box sx={{
@@ -614,8 +637,8 @@ const Home = () => {
                             containerSx={{
                                 width: { xs: '240px', md: '273px' },
                                 height: { xs: '320px', md: '380px' },
-                                padding: { xs: '15px', md: '20px' },
-                                left: { xs: '20px', md: '20px' }
+                                padding: { xs: '10px', md: '20px' },
+                                left: { xs: '-10px', md: '20px' }
                             }}
                         />
                     ))}
@@ -928,21 +951,27 @@ const Home = () => {
                     </Typography>
                 </Box>
 
-                <Box sx={{
-                    flex: 1,
-                    width: { xs: '100%', md: 'auto' },
-                    maxWidth: '100%',
-                    minWidth: 0,
-                    display: 'flex',
-                    overflowX: 'auto',
-                    gap: '24px',
-                    justifyContent: { xs: 'flex-start', md: 'space-between' },
-                    pb: 0,
-                    '&::-webkit-scrollbar': { display: 'none' },
-                    msOverflowStyle: 'none',
-                    scrollbarWidth: 'none',
-                }}>
-                    {testimonials.map((t, idx) => (
+                <Box
+                    ref={testimonialsScrollRef}
+                    sx={{
+                        flex: 1,
+                        width: { xs: '100%', md: 'auto' },
+                        maxWidth: '100%',
+                        minWidth: 0,
+                        display: 'flex',
+                        overflowX: 'auto',
+                        gap: '24px',
+                        justifyContent: { xs: 'flex-start', md: 'space-between' },
+                        pb: 0,
+                        '&::-webkit-scrollbar': { display: 'none' },
+                        msOverflowStyle: 'none',
+                        scrollbarWidth: 'none',
+                        scrollSnapType: isMobile ? 'x mandatory' : 'none',
+                        '& > *': {
+                            scrollSnapAlign: isMobile ? 'center' : 'none'
+                        }
+                    }}>
+                    {[...testimonials, ...testimonials].map((t, idx) => (
                         <Box key={idx} sx={{
                             width: '289px',
                             minWidth: '289px',
@@ -951,6 +980,7 @@ const Home = () => {
                             borderRadius: '10px',
                             pt: '30px',
                             px: '24px',
+                            boxSizing: 'border-box',
                             display: 'flex',
                             flexDirection: 'column',
                             alignItems: 'center',
@@ -972,9 +1002,9 @@ const Home = () => {
                                 fontFamily: 'Poppins',
                                 fontWeight: 400,
                                 fontSize: '16px',
-                                lineHeight: '20px',
+                                lineHeight: 1.6,
                                 color: '#777',
-                                textAlign: 'left',
+                                textAlign: { xs: 'center', md: 'left' },
                                 width: '100%'
                             }}>
                                 {t.text}
