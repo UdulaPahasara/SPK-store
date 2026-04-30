@@ -1,5 +1,5 @@
-import React from 'react';
-import { Box, Typography, Button, Grid, Rating, IconButton } from '@mui/material';
+import React, { useEffect, useRef } from 'react';
+import { Box, Typography, Button, Grid, Rating, IconButton, useTheme, useMediaQuery } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
 import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
 import ShoppingCartOutlinedIcon from '@mui/icons-material/ShoppingCartOutlined';
@@ -57,6 +57,24 @@ import ProductCard from '../ProductCard/ProductCard';
 
 const Home = () => {
     const navigate = useNavigate();
+    const scrollRef = useRef(null);
+    const theme = useTheme();
+    const isMobile = useMediaQuery(theme.breakpoints.down('md'));
+
+    useEffect(() => {
+        if (!isMobile) return;
+        const interval = setInterval(() => {
+            if (scrollRef.current) {
+                const { scrollLeft, scrollWidth, clientWidth } = scrollRef.current;
+                if (scrollLeft + clientWidth >= scrollWidth - 10) {
+                    scrollRef.current.scrollTo({ left: 0, behavior: 'smooth' });
+                } else {
+                    scrollRef.current.scrollBy({ left: 260, behavior: 'smooth' });
+                }
+            }
+        }, 3000);
+        return () => clearInterval(interval);
+    }, [isMobile]);
 
     const categories = [
         { name: 'Gimbal', img: cat1, path: '/gimbals' },
@@ -120,7 +138,7 @@ const Home = () => {
         }
     ];
 
-    const brands = [b1, b2, b3, b4, b5, b6];
+    const brands = [b1, b2, b3, b4, b5, b6, b1, b2, b3, b4, b5, b6];
 
     const testimonials = [
         {
@@ -152,14 +170,15 @@ const Home = () => {
             <Box component="section" sx={{
                 position: 'relative',
                 width: '100%',
-                maxWidth: '1443px',
-                height: { xs: '400px', md: '496px' },
-                margin: { xs: '60px auto 0', md: '86px auto 0' },
+                height: { xs: '240px', sm: '320px', md: '420px', lg: '496px' },
+                mt: '78px',
+                mb: 0,
+                mx: 'auto',
                 bgcolor: '#000',
                 overflow: 'hidden',
                 display: 'flex',
-                alignItems: 'center',
-                mt: { xs: -5, md: -1 }
+                mt: '-45px',
+                alignItems: 'center'
             }}>
                 <Box
                     component="img"
@@ -179,7 +198,7 @@ const Home = () => {
                     position: 'relative',
                     zIndex: 2,
                     width: '100%',
-                    padding: { xs: '0 5%', md: '0 10%' },
+                    padding: '0 10%',
                     display: 'flex',
                     flexDirection: 'column',
                     justifyContent: 'center',
@@ -214,29 +233,28 @@ const Home = () => {
                 width: '100%',
                 display: 'flex',
                 justifyContent: 'center',
-                mt: { xs: '40px', md: '62px' },
-                mb: { xs: '40px', md: '62px' },
+                mt: '62px',
+                mb: '62px',
                 px: { xs: 2, md: 0 }
             }}>
                 <Box sx={{
-                    width: 'auto',
-                    minWidth: { xs: '95%', md: '1008px' },
+                    width: '100%',
                     maxWidth: '1200px',
                     bgcolor: '#F4F4F4',
                     borderRadius: '8px',
-                    padding: { xs: '20px', md: '15px 40px' },
+                    padding: { xs: '16px', md: '24px 40px' },
                     display: 'flex',
                     flexDirection: { xs: 'column', md: 'row' },
                     justifyContent: 'space-between',
                     alignItems: 'center',
-                    gap: { xs: 2.5, md: 5 },
+                    gap: { xs: 2, md: 5 },
                     textAlign: 'center'
                 }}>
                     <Typography sx={{
                         fontFamily: 'Poppins, sans-serif',
                         fontWeight: 500,
-                        fontSize: { xs: '14px', sm: '16px', md: '20px' },
-                        lineHeight: { xs: 1.4, md: '100%' },
+                        fontSize: { xs: '14px', sm: '18px', md: '20px' },
+                        lineHeight: '100%',
                         textTransform: 'uppercase',
                         color: 'rgba(0, 0, 0, 1)',
                         whiteSpace: { xs: 'normal', md: 'nowrap' },
@@ -250,8 +268,8 @@ const Home = () => {
                         sx={{
                             color: '#ff0000',
                             borderColor: '#ff0000',
-                            padding: { xs: '10px 30px', md: '10px 24px' },
-                            fontSize: { xs: '0.85rem', md: '0.95rem' },
+                            padding: '10px 24px',
+                            fontSize: '0.95rem',
                             fontWeight: 600,
                             borderRadius: '4px',
                             whiteSpace: 'nowrap',
@@ -272,12 +290,12 @@ const Home = () => {
             <Box component="section" sx={{
                 width: '100%',
                 maxWidth: '1240px',
-                px: { xs: 2, md: 0 },
-                mb: { xs: '60px', md: '80px' },
+                px: 0,
+                mb: '80px',
                 textAlign: 'center'
             }}>
                 <Typography variant="h3" sx={{
-                    fontSize: { xs: '1.5rem', md: '1.8rem' },
+                    fontSize: '1.8rem',
                     fontWeight: 700,
                     mb: 0.5,
                     fontFamily: 'Poppins, sans-serif'
@@ -292,9 +310,9 @@ const Home = () => {
                     Explore our main categories on the go
                 </Typography>
 
-                <Grid container spacing={3} sx={{ justifyContent: 'center' }}>
+                <Grid container spacing={3} sx={{ justifyContent: 'center', flexWrap: { xs: 'wrap', md: 'nowrap' } }}>
                     {categories.map((cat, index) => (
-                        <Grid item xs={12} sm={6} md={3} key={index} sx={{ display: 'flex', justifyContent: 'center' }}>
+                        <Grid item xs={12} sm={3} md={3} key={index} sx={{ display: 'flex', justifyContent: 'center' }}>
                             <Box
                                 onClick={() => navigate(cat.path)}
                                 sx={{
@@ -302,7 +320,9 @@ const Home = () => {
                                     flexDirection: 'column',
                                     alignItems: 'center',
                                     cursor: 'pointer',
-                                    width: '290px',
+                                    width: '100%',
+                                    maxWidth: '290px',
+                                    zoom: { md: 0.75, lg: 1 },
                                     '&:hover img': {
                                         transform: 'scale(1.05)',
                                         transition: 'transform 150ms ease-out'
@@ -317,7 +337,7 @@ const Home = () => {
                                     display: 'flex',
                                     justifyContent: 'center',
                                     alignItems: 'center',
-                                    mb: 1.5,
+                                    mb: '10px',
                                     overflow: 'hidden'
                                 }}>
                                     <Box
@@ -348,20 +368,22 @@ const Home = () => {
             {/* Shipping Info Section */}
             <Box component="section" sx={{
                 width: '100%',
-                maxWidth: '1240px',
+                maxWidth: { xs: '240px', sm: '700px', md: '960px', lg: '1200px' },
                 bgcolor: '#F2F2F2',
                 borderRadius: '10px',
-                padding: { xs: '30px', md: '40px' },
-                mb: { xs: '60px', md: '80px' },
-                mx: { xs: 2, md: 0 }
+                padding: '20px',
+                mb: '60px',
+                mx: 'auto'
             }}>
-                <Grid container spacing={7} sx={{ width: '100%', margin: 0 }}>
+                <Grid container spacing={{ xs: 2, md: 3, lg: 16 }} sx={{ width: '100%', justifyContent: 'center' }}>
                     {shippingInfo.map((item, index) => (
-                        <Grid item xs={12} sm={6} md={3} key={index} sx={{
+                        <Grid item xs={12} md={3} key={index} sx={{
                             display: 'flex',
+                            flexDirection: 'column',
                             alignItems: 'center',
-                            gap: 2,
-                            paddingLeft: '0 !important'
+                            gap: { xs: 2, md: 1 },
+                            justifyContent: 'center',
+                            textAlign: 'center'
                         }}>
                             <Box sx={{
                                 width: '78px',
@@ -375,10 +397,10 @@ const Home = () => {
                             }}>
                                 <Box component="img" src={item.icon} sx={{ width: '40px', height: 'auto' }} />
                             </Box>
-                            <Box sx={{ textAlign: 'left' }}>
+                            <Box sx={{ textAlign: 'center' }}>
                                 <Typography sx={{
                                     fontWeight: 700,
-                                    fontSize: { xs: '0.9rem', md: '0.95rem' },
+                                    fontSize: '0.95rem',
                                     fontFamily: 'Poppins, sans-serif',
                                     lineHeight: 1.2
                                 }}>
@@ -397,34 +419,36 @@ const Home = () => {
             <Box component="section" sx={{
                 width: '100%',
                 maxWidth: '1240px',
-                px: { xs: 2, md: 0 },
-                mb: { xs: '60px', md: '100px' },
-                overflow: 'hidden'
+                px: { xs: 2, md: 2 },
+                mb: { xs: '50px', md: '100px' },
+                overflow: 'hidden',
+                mx: 'auto'
             }}>
                 <Typography variant="h3" sx={{
-                    fontSize: { xs: '1.5rem', md: '1.8rem' },
+                    fontSize: '1.8rem',
                     fontWeight: 700,
                     mb: 4,
                     textAlign: 'left',
-                    fontFamily: 'Poppins, sans-serif'
+                    fontFamily: 'Poppins'
                 }}>
                     Hot Deals
                 </Typography>
 
                 <Box sx={{
                     display: 'flex',
-                    flexDirection: { xs: 'column', lg: 'row' },
-                    gap: { xs: 4, lg: 3 },
-                    alignItems: { xs: 'center', lg: 'flex-start' }
+                    flexDirection: 'row',
+                    gap: 3,
+                    alignItems: 'flex-start'
                 }}>
-                    {/* Main Deal Card: 520x413 */}
+                    {/* Main Deal Card */}
                     <Box sx={{
-                        width: { xs: '100%', sm: '520px' },
+                        width: '520px',
                         height: '413px',
                         position: 'relative',
                         borderRadius: '16px',
                         overflow: 'hidden',
-                        flexShrink: 0
+                        flexShrink: 0,
+                        display: { xs: 'none', md: 'block' }
                     }}>
                         <Box
                             component="img"
@@ -477,20 +501,34 @@ const Home = () => {
                     </Box>
 
                     {/* Secondary Deal Cards Wrapper: Swipeable */}
-                    <Box sx={{
-                        display: 'flex',
-                        gap: 3,
-                        flexWrap: 'nowrap',
-                        overflowX: 'auto',
-                        width: '100%',
-                        pb: 1,
-                        cursor: 'grab',
-                        '&::-webkit-scrollbar': { display: 'none' },
-                        msOverflowStyle: 'none',
-                        scrollbarWidth: 'none',
-                    }}>
+                    <Box
+                        ref={scrollRef}
+                        sx={{
+                            display: 'flex',
+                            gap: 3,
+                            flexWrap: 'nowrap',
+                            overflowX: 'auto',
+                            width: '100%',
+                            pb: 1,
+                            cursor: 'grab',
+                            '&::-webkit-scrollbar': { display: 'none' },
+                            msOverflowStyle: 'none',
+                            scrollbarWidth: 'none',
+                            scrollSnapType: isMobile ? 'x mandatory' : 'none',
+                            '& > *': {
+                                scrollSnapAlign: isMobile ? 'center' : 'none'
+                            }
+                        }}>
                         {hotDeals.map((deal, index) => (
-                            <ProductCard key={index} product={deal} />
+                            <ProductCard
+                                key={index}
+                                product={deal}
+                                containerSx={{
+                                    width: { xs: '240px', md: '273px' },
+                                    height: { xs: '290px', md: '380px' },
+                                    padding: { xs: '10px', md: '20px' }
+                                }}
+                            />
                         ))}
                     </Box>
                 </Box>
@@ -500,12 +538,12 @@ const Home = () => {
             <Box component="section" sx={{
                 width: '100%',
                 maxWidth: '1240px',
-                px: { xs: 2, md: 0 },
-                mb: { xs: '60px', md: '100px' },
-                textAlign: 'left'
+                px: { xs: 2, md: 2 },
+                mb: { xs: '50px', md: '100px' },
+                mx: 'auto'
             }}>
                 <Typography variant="h3" sx={{
-                    fontSize: { xs: '1.5rem', md: '1.8rem' },
+                    fontSize: '1.8rem',
                     fontWeight: 700,
                     mb: 4,
                     fontFamily: 'Poppins, sans-serif'
@@ -526,7 +564,16 @@ const Home = () => {
                     scrollbarWidth: 'none',
                 }}>
                     {popularProducts.map((product, index) => (
-                        <ProductCard key={index} product={product} />
+                        <ProductCard
+                            key={index}
+                            product={product}
+                            containerSx={{
+                                width: { xs: '240px', md: '273px' },
+                                height: { xs: '320px', md: '380px' },
+                                padding: { xs: '15px', md: '20px' },
+                                left: { xs: '20px', md: '20px' }
+                            }}
+                        />
                     ))}
                 </Box>
             </Box>
@@ -534,98 +581,41 @@ const Home = () => {
             {/* Promo Banner Section */}
             <Box component="section" sx={{
                 width: '100%',
-                maxWidth: '1241px',
-                mb: { xs: '60px', md: '100px' },
-                mt: { xs: '40px', md: '60px' },
-                px: { xs: 2, sm: 3, md: 5 }
+                maxWidth: { md: '1000px', lg: '1400px' },
+                mb: { xs: '50px', md: '10px' },
+                mt: { xs: '30px', md: '60px' },
+                px: { xs: 2, md: 5 }
             }}>
-                {/* MOBILE / TABLET layout (xs, sm) — clean coral card, no overlapping imagery */}
-                <Box sx={{
-                    display: { xs: 'flex', md: 'none' },
-                    flexDirection: 'column',
-                    borderRadius: '20px',
-                    overflow: 'hidden',
-                    bgcolor: '#F66A74',
-                }}>
-                    <Box sx={{
-                        bgcolor: '#F66A74',
-                        color: '#fff',
-                        textAlign: 'center',
-                        px: { xs: 3, sm: 5 },
-                        py: { xs: 4, sm: 5 },
-                    }}>
-                        <Typography variant="h3" sx={{
-                            fontSize: { xs: '1.6rem', sm: '2.2rem' },
-                            fontWeight: 700,
-                            fontFamily: 'Poppins, sans-serif',
-                            lineHeight: 1.2,
-                            mb: 2
-                        }}>
-                            Score Big Savings on Sports Gear
-                        </Typography>
-                        <Typography sx={{
-                            fontSize: { xs: '0.82rem', sm: '0.9rem' },
-                            mb: 3,
-                            opacity: 0.9,
-                            lineHeight: 1.6,
-                            maxWidth: '400px',
-                            mx: 'auto'
-                        }}>
-                            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor rem ipsum dolor sit amet.
-                        </Typography>
-                        <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 2 }}>
-                            <Typography sx={{ fontSize: { xs: '2.8rem', sm: '3.5rem' }, fontWeight: 700, fontFamily: 'Poppins' }}>
-                                20 %
-                            </Typography>
-                            <Button
-                                variant="outlined"
-                                sx={{
-                                    borderColor: '#fff',
-                                    color: '#fff',
-                                    borderRadius: '10px',
-                                    padding: { xs: '10px 28px', sm: '12px 35px' },
-                                    fontWeight: 700,
-                                    fontSize: { xs: '0.9rem', sm: '1rem' },
-                                    textTransform: 'none',
-                                    '&:hover': { bgcolor: 'rgba(255,255,255,0.15)', borderColor: '#fff' }
-                                }}
-                            >
-                                SHOP NOW
-                            </Button>
-                        </Box>
-                    </Box>
-                </Box>
-
-                {/* DESKTOP layout (md+) — responsive overlapping design */}
+                {/* Desktop Promo Banner */}
                 <Box sx={{
                     display: { xs: 'none', md: 'flex' },
                     width: '100%',
-                    height: { md: '450px', lg: '550px' },
+                    height: '550px',
                     justifyContent: 'center',
                     alignItems: 'center',
                     position: 'relative',
                 }}>
                     <Box sx={{
                         width: '100%',
-                        height: { md: '280px', lg: '343px' },
+                        height: '343px',
                         bgcolor: '#F66A74',
                         borderRadius: '20px',
                         position: 'relative',
                         display: 'flex',
                         alignItems: 'center',
                         justifyContent: 'flex-end',
-                        padding: { md: '0 40px', lg: '0 80px' },
+                        padding: { md: '0 30px', lg: '0 80px' },
                         overflow: 'visible',
                     }}>
                         {/* White Semi-Circle */}
                         <Box sx={{
                             position: 'absolute',
-                            width: { md: '200px', lg: '250px' },
-                            height: { md: '400px', lg: '480px' },
+                            width: '250px',
+                            height: '480px',
                             bgcolor: '#fff',
                             borderRadius: '0 250px 250px 0',
-                            left: { md: '-50px', lg: '-70px' },
-                            top: { md: '-40%', lg: '-40%' },
+                            left: '-70px',
+                            top: '-40%',
                             transform: 'translateY(-50%)',
                             zIndex: 1,
                             rotate: '90deg',
@@ -636,13 +626,13 @@ const Home = () => {
                             src={handImg}
                             alt="Hand holding drone"
                             sx={{
-                                width: { md: '400px', lg: '536px' },
+                                width: { md: '440px', lg: '536px' },
                                 height: 'auto',
                                 position: 'absolute',
-                                left: { md: '20px', lg: '38px' },
-                                bottom: { md: '-10px', lg: '-20px' },
+                                left: { md: '0px', lg: '38px' },
+                                bottom: '0px',
                                 zIndex: 2,
-                                pointerEvents: 'none'
+                                pointerEvents: 'none',
                             }}
                         />
                         {/* SPK Logo */}
@@ -655,14 +645,14 @@ const Home = () => {
                                 height: 'auto',
                                 position: 'absolute',
                                 left: { md: '280px', lg: '340px' },
-                                top: { md: '110px', lg: '145px' },
+                                top: { md: '165px', lg: '145px' },
                                 zIndex: 3
                             }}
                         />
                         {/* Text Content */}
-                        <Box sx={{ width: { md: '400px', lg: '550px' }, color: '#fff', textAlign: 'left', zIndex: 4 }}>
+                        <Box sx={{ width: { md: '440px', lg: '550px' }, color: '#fff', textAlign: 'left', zIndex: 4 }}>
                             <Typography variant="h3" sx={{
-                                fontSize: { md: '2rem', lg: '2.8rem' },
+                                fontSize: { md: '2.1rem', lg: '2.8rem' },
                                 fontWeight: 700,
                                 fontFamily: 'Poppins, sans-serif',
                                 lineHeight: 1.2,
@@ -673,8 +663,8 @@ const Home = () => {
                             <Typography sx={{ fontSize: '0.9rem', mb: 4, opacity: 0.9, maxWidth: '450px' }}>
                                 Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor rem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor
                             </Typography>
-                            <Box sx={{ display: 'flex', alignItems: 'center', gap: 4 }}>
-                                <Typography sx={{ fontSize: { md: '4rem', lg: '5.5rem' }, fontWeight: 700, fontFamily: 'Poppins' }}>
+                            <Box sx={{ display: 'flex', alignItems: 'center', gap: { md: 2, lg: 4 } }}>
+                                <Typography sx={{ fontSize: { md: '4.5rem', lg: '5.5rem' }, fontWeight: 700, fontFamily: 'Poppins' }}>
                                     20 %
                                 </Typography>
                                 <Button
@@ -696,6 +686,88 @@ const Home = () => {
                         </Box>
                     </Box>
                 </Box>
+
+                {/* Mobile Promo Banner */}
+                <Box sx={{
+                    display: { xs: 'flex', md: 'none' },
+                    width: '90%',
+                    maxWidth: { xs: '260px', sm: '680px' },
+                    mx: 'auto',
+                    bgcolor: '#F66A74',
+                    borderRadius: '20px',
+                    p: { xs: 3, sm: 5 },
+                    flexDirection: 'column',
+                    alignItems: 'center',
+                    textAlign: 'center',
+                    color: '#fff',
+                    position: 'relative',
+                    overflow: 'hidden'
+                }}>
+                    {/* Decorative Circle for Mobile */}
+                    <Box sx={{
+                        position: 'absolute',
+                        width: '150px',
+                        height: '150px',
+                        bgcolor: 'rgba(255,255,255,0.1)',
+                        borderRadius: '50%',
+                        top: '-50px',
+                        right: '-50px',
+                        zIndex: 1
+                    }} />
+
+                    <Typography variant="h3" sx={{
+                        fontSize: { xs: '1.6rem', sm: '2.2rem' },
+                        fontWeight: 700,
+                        fontFamily: 'Poppins, sans-serif',
+                        lineHeight: 1.2,
+                        mb: 2,
+                        zIndex: 2
+                    }}>
+                        Score Big Savings on Sports Gear
+                    </Typography>
+                    <Typography sx={{
+                        fontSize: { xs: '0.8rem', sm: '0.95rem' },
+                        mb: 4,
+                        opacity: 0.9,
+                        zIndex: 2,
+                        maxWidth: '280px',
+                        lineHeight: 1.5
+                    }}>
+                        Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor rem ipsum dolor sit amet.
+                    </Typography>
+                    <Box sx={{
+                        display: 'flex',
+                        flexDirection: 'column',
+                        alignItems: 'center',
+                        gap: 1.5,
+                        zIndex: 2
+                    }}>
+                        <Typography sx={{
+                            fontSize: { xs: '3.5rem', sm: '4.5rem' },
+                            fontWeight: 700,
+                            fontFamily: 'Poppins',
+                            lineHeight: 1
+                        }}>
+                            20 %
+                        </Typography>
+                        <Button
+                            variant="outlined"
+                            sx={{
+                                borderColor: '#fff',
+                                color: '#fff',
+                                borderRadius: '10px',
+                                padding: '10px 30px',
+                                fontWeight: 700,
+                                fontSize: '0.9rem',
+                                textTransform: 'none',
+                                mt: 1,
+                                '&:hover': { bgcolor: 'rgba(255,255,255,0.1)', borderColor: '#fff' }
+                            }}
+                        >
+                            SHOP NOW
+                        </Button>
+                    </Box>
+                </Box>
             </Box>
 
 
@@ -706,13 +778,14 @@ const Home = () => {
                 width: '100%',
                 maxWidth: '1241px',
                 px: { xs: 2, md: 0 },
-                mb: { xs: '60px', md: '100px' },
+                mb: { xs: '50px', md: '100px' },
                 display: 'flex',
                 flexDirection: 'column',
-                alignItems: 'flex-start'
+                alignItems: 'flex-start',
+                mx: 'auto'
             }}>
                 <Typography variant="h3" sx={{
-                    fontSize: { xs: '1.2rem', md: '1.4rem' },
+                    fontSize: '1.4rem',
                     fontWeight: 700,
                     mb: 4,
                     fontFamily: 'Poppins, sans-serif',
@@ -729,31 +802,42 @@ const Home = () => {
 
                 <Box sx={{
                     width: '100%',
-                    display: 'flex',
-                    alignItems: 'center',
-                    justifyContent: 'space-between',
+                    overflow: 'hidden',
+                    whiteSpace: 'nowrap',
+                    position: 'relative',
                     minHeight: '119px',
-                    overflowX: 'auto',
-                    gap: { xs: 4, md: 0 },
-                    px: { xs: 2, md: 3 },
-                    '&::-webkit-scrollbar': { display: 'none' },
-                    msOverflowStyle: 'none',
-                    scrollbarWidth: 'none',
+                    display: 'flex',
+                    alignItems: 'center'
                 }}>
-                    {brands.map((brand, index) => (
-                        <Box
-                            key={index}
-                            component="img"
-                            src={brand}
-                            alt={`Brand ${index + 1}`}
-                            sx={{
-                                height: { xs: '25px', sm: '35px', md: '45px' },
-                                width: 'auto',
-                                objectFit: 'contain',
-                                flexShrink: 0
-                            }}
-                        />
-                    ))}
+                    <Box sx={{
+                        display: 'flex',
+                        alignItems: 'center',
+                        gap: { xs: 8, md: 15 },
+                        width: 'max-content',
+                        animation: 'scroll 30s linear infinite',
+                        '@keyframes scroll': {
+                            '0%': { transform: 'translateX(0)' },
+                            '100%': { transform: 'translateX(-50%)' }
+                        },
+                        '&:hover': {
+                            animationPlayState: 'paused'
+                        }
+                    }}>
+                        {brands.map((brand, index) => (
+                            <Box
+                                key={index}
+                                component="img"
+                                src={brand}
+                                alt={`Brand ${index + 1}`}
+                                sx={{
+                                    height: { xs: '24px', sm: '35px', md: '45px' },
+                                    width: 'auto',
+                                    objectFit: 'contain',
+                                    flexShrink: 0
+                                }}
+                            />
+                        ))}
+                    </Box>
                 </Box>
 
                 <Box sx={{
@@ -768,14 +852,15 @@ const Home = () => {
                 width: '100%',
                 maxWidth: '1241px',
                 px: { xs: 2, md: 0 },
-                mb: { xs: '60px', md: '100px' },
+                mb: { xs: '50px', md: '100px' },
                 display: 'flex',
                 flexDirection: { xs: 'column', lg: 'row' },
                 alignItems: { xs: 'center', lg: 'flex-start' },
                 justifyContent: 'space-between',
-                gap: { xs: 5, lg: 3 }
+                mx: 'auto',
+                gap: 3
             }}>
-                <Box sx={{ width: { xs: '100%', lg: '320px' }, flexShrink: 0, textAlign: { xs: 'center', lg: 'left' }, pr: { lg: 2 } }}>
+                <Box sx={{ width: { xs: '100%', lg: '320px' }, flexShrink: 0, textAlign: { xs: 'center', lg: 'left' }, pr: { xs: 0, lg: 2 } }}>
                     <Typography sx={{ fontSize: '1.2rem', fontWeight: 600, color: '#777', fontFamily: 'Poppins' }}>
                         Why shop with
                     </Typography>
@@ -791,9 +876,9 @@ const Home = () => {
                     flex: 1,
                     display: 'flex',
                     overflowX: 'auto',
-                    gap: { xs: 3, lg: '24px' },
-                    justifyContent: { xs: 'flex-start', lg: 'space-between' },
-                    pb: { xs: 2, lg: 0 },
+                    gap: '24px',
+                    justifyContent: 'space-between',
+                    pb: 0,
                     '&::-webkit-scrollbar': { display: 'none' },
                     msOverflowStyle: 'none',
                     scrollbarWidth: 'none',
@@ -843,15 +928,14 @@ const Home = () => {
             {/* Last Banner Section */}
             <Box component="section" sx={{
                 width: '100%',
-                maxWidth: '1447px',
-                height: { xs: '300px', md: '496px' },
-                mt: { xs: '60px', md: '80px' },
+                height: { xs: '200px', sm: '280px', md: '400px', lg: '496px' },
+                mt: 0,
                 mb: 0,
                 display: 'flex',
                 justifyContent: 'center',
                 alignItems: 'center',
                 overflow: 'hidden',
-                mt: '-55px'
+                mx: 'auto'
             }}>
                 <Box
                     component="img"
