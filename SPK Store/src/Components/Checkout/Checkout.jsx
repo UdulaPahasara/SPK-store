@@ -70,7 +70,7 @@ const Checkout = () => {
                                 />
                                 <Box sx={{ display: 'flex', flexDirection: 'column', ml: 1 }}>
                                     <Typography sx={{ fontFamily: 'Poppins', fontSize: '16px', mb: 1 }}>Add new card</Typography>
-                                    <Box sx={{ display: 'flex', gap: 1 }}>
+                                    <Box sx={{ display: 'flex', gap: 1, ml: { xs: '-3px' } }}>
                                         <Box component="img" src={card1} alt="card" sx={{ width: '67px', height: '25px', objectFit: 'contain', border: '1px solid rgba(0,0,0,0.1)' }} />
                                         <Box component="img" src={card2} alt="card" sx={{ width: '67px', height: '25px', objectFit: 'contain', border: '1px solid rgba(0,0,0,0.1)' }} />
                                         <Box component="img" src={card3} alt="card" sx={{ width: '67px', height: '25px', objectFit: 'contain', border: '1px solid rgba(0,0,0,0.1)' }} />
@@ -121,107 +121,106 @@ const Checkout = () => {
                                 Ship to
                             </Typography>
 
-                            <Grid container spacing={3}>
-                                <Grid item xs={12} sm={6}>
-                                    <Typography sx={{ fontSize: '14px', fontFamily: 'Inter', mb: 0.5, color: '#000' }}>First Name</Typography>
+                            <Box sx={{
+                                display: 'grid',
+                                gridTemplateColumns: { xs: '1fr', sm: '1fr 1fr' },
+                                gap: 4,
+                                width: '100%'
+                            }}>
+                                <Box>
+                                    <Typography sx={{ fontSize: '14px', fontFamily: 'Poppins', fontWeight: 500, mb: 1, color: '#000' }}>First Name</Typography>
                                     <TextField
                                         fullWidth
                                         variant="outlined"
                                         size="small"
                                         sx={{
-                                            maxWidth: { sm: '333px' },
-                                            '& .MuiOutlinedInput-root': { height: '30px', borderRadius: '2px', bgcolor: '#fff' }
+                                            '& .MuiOutlinedInput-root': { height: '35px', borderRadius: '4px', bgcolor: '#fff' }
                                         }}
                                     />
-                                </Grid>
-                                <Grid item xs={12} sm={6}>
-                                    <Typography sx={{ fontSize: '14px', fontFamily: 'Inter', mb: 0.5, color: '#000' }}>Last Name</Typography>
+                                </Box>
+                                <Box>
+                                    <Typography sx={{ fontSize: '14px', fontFamily: 'Poppins', fontWeight: 500, mb: 1, color: '#000' }}>Last Name</Typography>
                                     <TextField
                                         fullWidth
                                         variant="outlined"
                                         size="small"
                                         sx={{
-                                            maxWidth: { sm: '333px' },
-                                            '& .MuiOutlinedInput-root': { height: '30px', borderRadius: '2px', bgcolor: '#fff' }
+                                            '& .MuiOutlinedInput-root': { height: '35px', borderRadius: '4px', bgcolor: '#fff' }
                                         }}
                                     />
-                                </Grid>
-                                <Grid item xs={12} sm={6}>
-                                    <Typography sx={{ fontSize: '14px', fontFamily: 'Inter', mb: 0.5, color: '#000' }}>Contact Number</Typography>
+                                </Box>
+                                <Box>
+                                    <Typography sx={{ fontSize: '14px', fontFamily: 'Poppins', fontWeight: 500, mb: 1, color: '#000' }}>Contact Number</Typography>
                                     <TextField
                                         fullWidth
                                         variant="outlined"
                                         size="small"
                                         sx={{
-                                            maxWidth: { sm: '333px' },
-                                            '& .MuiOutlinedInput-root': { height: '30px', borderRadius: '2px', bgcolor: '#fff' }
+                                            '& .MuiOutlinedInput-root': { height: '35px', borderRadius: '4px', bgcolor: '#fff' }
                                         }}
                                     />
-                                </Grid>
-                                <Grid item xs={12} sm={6}>
-                                    <Typography sx={{ fontSize: '14px', fontFamily: 'Inter', mb: 0.5, color: '#000' }}>Email</Typography>
+                                </Box>
+                                <Box>
+                                    <Typography sx={{ fontSize: '14px', fontFamily: 'Poppins', fontWeight: 500, mb: 1, color: '#000' }}>Email</Typography>
                                     <TextField
                                         fullWidth
                                         variant="outlined"
                                         size="small"
                                         sx={{
-                                            maxWidth: { sm: '333px' },
-                                            '& .MuiOutlinedInput-root': { height: '30px', borderRadius: '2px', bgcolor: '#fff' }
+                                            '& .MuiOutlinedInput-root': { height: '35px', borderRadius: '4px', bgcolor: '#fff' }
                                         }}
                                     />
-                                </Grid>
-                                <Grid item xs={12} sm={6}>
-                                    <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mb: 0.5, maxWidth: { sm: '333px' } }}>
-                                        <Typography sx={{ fontSize: '14px', fontFamily: 'Inter', color: '#000' }}>Shipping Address</Typography>
-                                        <Typography sx={{ fontSize: '10px', fontFamily: 'Inter', color: '#666', textDecoration: 'underline', cursor: 'pointer' }}>Set as default address</Typography>
+                                </Box>
+                                <Box>
+                                    <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mb: 1 }}>
+                                        <Typography sx={{ fontSize: '14px', fontFamily: 'Poppins', fontWeight: 500, color: '#000' }}>Shipping Address</Typography>
+                                        <Typography sx={{ fontSize: '11px', fontFamily: 'Poppins', color: '#666', textDecoration: 'underline', cursor: 'pointer' }}>Set as default address</Typography>
                                     </Box>
                                     <TextField
                                         fullWidth
                                         variant="outlined"
                                         size="small"
                                         sx={{
-                                            maxWidth: { sm: '333px' },
-                                            '& .MuiOutlinedInput-root': { height: '30px', borderRadius: '2px', bgcolor: '#fff' }
+                                            '& .MuiOutlinedInput-root': { height: '35px', borderRadius: '4px', bgcolor: '#fff' }
                                         }}
                                     />
-                                </Grid>
-                                <Grid item xs={12} sm={6}>
-                                    <Typography sx={{ fontSize: '14px', fontFamily: 'Inter', mb: 0.5, color: '#000' }}>Nearest City</Typography>
+                                </Box>
+                                <Box>
+                                    <Typography sx={{ fontSize: '14px', fontFamily: 'Poppins', fontWeight: 500, mb: 1, color: '#000' }}>Nearest City</Typography>
                                     <TextField
                                         fullWidth
                                         variant="outlined"
                                         size="small"
                                         sx={{
-                                            maxWidth: { sm: '333px' },
-                                            '& .MuiOutlinedInput-root': { height: '30px', borderRadius: '2px', bgcolor: '#fff' }
+                                            '& .MuiOutlinedInput-root': { height: '35px', borderRadius: '4px', bgcolor: '#fff' }
                                         }}
                                     />
-                                </Grid>
+                                </Box>
 
-                                <Grid item xs={12} sm={6}>
-                                    <Typography sx={{ fontSize: '14px', fontFamily: 'Inter', mb: 0.5, color: '#000' }}>District</Typography>
+                                <Box>
+                                    <Typography sx={{ fontSize: '14px', fontFamily: 'Poppins', fontWeight: 500, mb: 1, color: '#000' }}>District</Typography>
                                     <TextField
                                         fullWidth
                                         variant="outlined"
                                         size="small"
                                         sx={{
-                                            maxWidth: { sm: '333px' },
-                                            '& .MuiOutlinedInput-root': { height: '30px', borderRadius: '2px', bgcolor: '#fff' }
+                                            '& .MuiOutlinedInput-root': { height: '35px', borderRadius: '4px', bgcolor: '#fff' }
                                         }}
                                     />
-                                </Grid>
-                                <Grid item xs={12} sm={6} sx={{ display: 'flex', alignItems: 'flex-end', justifyContent: 'flex-start', gap: 2, mt: { xs: 2, sm: 0 }, maxWidth: { sm: '333px' } }}>
+                                </Box>
+                                <Box sx={{ display: 'flex', alignItems: 'flex-end', justifyContent: 'flex-start', gap: 2, pb: 0.2 }}>
                                     <Button
                                         variant="outlined"
                                         sx={{
                                             flex: 1,
-                                            height: '30px',
+                                            height: '35px',
                                             borderColor: '#F66A74',
                                             color: '#F66A74',
-                                            textTransform: 'uppercase',
-                                            fontSize: '12px',
-                                            fontFamily: 'Inter',
+                                            textTransform: 'none',
+                                            fontSize: '14px',
+                                            fontFamily: 'Poppins',
                                             fontWeight: 600,
+                                            borderRadius: '4px',
                                             '&:hover': { borderColor: '#e55a64', bgcolor: 'rgba(246, 106, 116, 0.04)' }
                                         }}
                                     >
@@ -231,22 +230,22 @@ const Checkout = () => {
                                         variant="contained"
                                         sx={{
                                             flex: 1,
-                                            height: '30px',
+                                            height: '35px',
                                             bgcolor: '#F66A74',
                                             color: '#fff',
-                                            textTransform: 'uppercase',
-                                            fontSize: '12px',
-                                            fontFamily: 'Inter',
+                                            textTransform: 'none',
+                                            fontSize: '14px',
+                                            fontFamily: 'Poppins',
                                             fontWeight: 600,
+                                            borderRadius: '4px',
                                             boxShadow: 'none',
                                             '&:hover': { bgcolor: '#e55a64', boxShadow: 'none' }
                                         }}
                                     >
                                         SAVE
                                     </Button>
-                                </Grid>
-
-                            </Grid>
+                                </Box>
+                            </Box>
                         </Box>
                     </Box>
 
