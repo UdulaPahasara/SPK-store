@@ -1,7 +1,10 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Box, Typography, Button } from '@mui/material';
+import Slip from './Slip/Slip';
 
-const CashOnDeliveryDetail = () => {
+const CashOnDeliveryDetail = ({ onUpload }) => {
+    const [showSlip, setShowSlip] = useState(false);
+
     return (
         <Box sx={{
             maxWidth: '714px',
@@ -44,6 +47,7 @@ const CashOnDeliveryDetail = () => {
 
                 <Button
                     variant="contained"
+                    onClick={() => setShowSlip(true)}
                     sx={{
                         bgcolor: '#F66A74',
                         color: '#fff',
@@ -64,6 +68,12 @@ const CashOnDeliveryDetail = () => {
                     Upload your slip
                 </Button>
             </Box>
+
+            <Slip
+                open={showSlip}
+                handleClose={() => setShowSlip(false)}
+                onUpload={onUpload}
+            />
         </Box>
     );
 };

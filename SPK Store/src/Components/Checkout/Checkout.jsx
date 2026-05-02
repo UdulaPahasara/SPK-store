@@ -15,6 +15,59 @@ import CashOnDeliveryDetail from './CheckoutDetail/CashOnDeliveryDetail';
 
 const Checkout = () => {
     const [paymentMethod, setPaymentMethod] = useState(null);
+    const [isSlipUploaded, setIsSlipUploaded] = useState(false);
+    const [formData, setFormData] = useState({
+        firstName: '',
+        lastName: '',
+        phone: '',
+        email: '',
+        address: '',
+        city: '',
+        district: ''
+    });
+    const [errors, setErrors] = useState({});
+
+    const handleInputChange = (e) => {
+        const { name, value } = e.target;
+        setFormData(prev => ({ ...prev, [name]: value }));
+        // Clear error when user starts typing
+        if (errors[name]) {
+            setErrors(prev => ({ ...prev, [name]: '' }));
+        }
+    };
+
+    const validateForm = () => {
+        let newErrors = {};
+        if (!formData.firstName) newErrors.firstName = 'First Name is required';
+        if (!formData.lastName) newErrors.lastName = 'Last Name is required';
+        if (!formData.phone) newErrors.phone = 'Phone is required';
+        if (!formData.email) {
+            newErrors.email = 'Email is required';
+        } else if (!/\S+@\S+\.\S+/.test(formData.email)) {
+            newErrors.email = 'Invalid email format';
+        }
+        if (!formData.address) newErrors.address = 'Address is required';
+        if (!formData.city) newErrors.city = 'City is required';
+        if (!formData.district) newErrors.district = 'District is required';
+
+        if (!paymentMethod) {
+            newErrors.paymentMethod = 'Please select a payment method';
+        } else if ((paymentMethod === 'bank' || paymentMethod === 'cod') && !isSlipUploaded) {
+            newErrors.paymentMethod = 'Please upload your bank slip before proceeding';
+        }
+
+        setErrors(newErrors);
+        return Object.keys(newErrors).length === 0;
+    };
+
+    const handleConfirmAndPay = () => {
+        if (validateForm()) {
+            alert('Order placed successfully!');
+            // Here you would typically call your API
+        } else {
+            alert('Please fix the errors before proceeding.');
+        }
+    };
 
     return (
         <Box sx={{ bgcolor: '#fff', minHeight: '100vh', display: 'flex', flexDirection: 'column' }}>
@@ -51,7 +104,16 @@ const Checkout = () => {
                     }}>
 
                         {/* Pay With Section */}
-                        <Box sx={{ border: '1px solid rgba(0,0,0,0.1)', mb: 6 }}>
+                        <Box sx={{
+                            border: errors.paymentMethod ? '2px solid #F66A74' : '1px solid rgba(0,0,0,0.1)',
+                            mb: 6,
+                            transition: 'border 0.3s ease'
+                        }}>
+                            {errors.paymentMethod && (
+                                <Typography sx={{ color: '#F66A74', fontSize: '12px', fontFamily: 'Poppins', p: 1, ml: 1 }}>
+                                    {errors.paymentMethod}
+                                </Typography>
+                            )}
                             {/* Pay with header */}
                             <Box sx={{ p: 2, borderBottom: '1px solid rgba(0,0,0,0.1)' }}>
                                 <Typography sx={{ fontWeight: 700, fontFamily: 'Poppins', fontSize: '18px' }}>
@@ -61,7 +123,10 @@ const Checkout = () => {
 
                             {/* Option 1: Add new card */}
                             <Box
-                                onClick={() => setPaymentMethod('card')}
+                                onClick={() => {
+                                    setPaymentMethod('card');
+                                    setIsSlipUploaded(false);
+                                }}
                                 sx={{
                                     display: 'flex', alignItems: 'flex-start', p: 2, borderBottom: '1px solid rgba(0,0,0,0.1)', cursor: 'pointer',
                                     bgcolor: paymentMethod === 'card' ? 'rgba(0,0,0,0.02)' : 'transparent'
@@ -95,11 +160,18 @@ const Checkout = () => {
                                     sx={{ p: { xs: 0.5, sm: 1 }, mt: 0.5, color: paymentMethod === 'bank' ? '#F66A74' : 'rgba(0,0,0,0.5)', '&.Mui-checked': { color: '#F66A74' } }}
                                 />
                                 <Box sx={{ display: 'flex', flexDirection: 'column', ml: { xs: 0, sm: 1 }, width: '100%' }}>
-                                    <Box sx={{ display: 'flex', alignItems: 'center' }}>
-                                        <Box component="img" src={bankTransferImg} alt="Bank Transfer" sx={{ width: '43px', height: '42px', mr: 2, objectFit: 'contain' }} />
-                                        <Typography sx={{ fontFamily: 'Poppins', fontSize: '16px', fontWeight: 600 }}>Bank Transfer</Typography>
+                                    <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', width: '100%' }}>
+                                        <Box sx={{ display: 'flex', alignItems: 'center' }}>
+                                            <Box component="img" src={bankTransferImg} alt="Bank Transfer" sx={{ width: '43px', height: '42px', mr: 2, objectFit: 'contain' }} />
+                                            <Typography sx={{ fontFamily: 'Poppins', fontSize: '16px', fontWeight: 600 }}>Bank Transfer</Typography>
+                                        </Box>
+                                        {isSlipUploaded && (
+                                            <Typography sx={{ color: '#2e7d32', fontSize: '12px', fontFamily: 'Poppins', fontWeight: 600, display: 'flex', alignItems: 'center' }}>
+                                                ✓ Attached
+                                            </Typography>
+                                        )}
                                     </Box>
-                                    {paymentMethod === 'bank' && <BankDetail />}
+                                    {paymentMethod === 'bank' && <BankDetail onUpload={() => setIsSlipUploaded(true)} />}
                                 </Box>
                             </Box>
 
@@ -116,11 +188,18 @@ const Checkout = () => {
                                     sx={{ p: { xs: 0.5, sm: 1 }, mt: 0.5, color: paymentMethod === 'cod' ? '#F66A74' : 'rgba(0,0,0,0.5)', '&.Mui-checked': { color: '#F66A74' } }}
                                 />
                                 <Box sx={{ display: 'flex', flexDirection: 'column', ml: { xs: 0, sm: 1 }, width: '100%' }}>
-                                    <Box sx={{ display: 'flex', alignItems: 'center' }}>
-                                        <Box component="img" src={cashOnDeliveryImg} alt="Cash on Delivery" sx={{ width: '43px', height: '42px', mr: 2, objectFit: 'contain' }} />
-                                        <Typography sx={{ fontFamily: 'Poppins', fontSize: '16px', fontWeight: 600 }}>Cash on Delivery</Typography>
+                                    <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', width: '100%' }}>
+                                        <Box sx={{ display: 'flex', alignItems: 'center' }}>
+                                            <Box component="img" src={cashOnDeliveryImg} alt="Cash on Delivery" sx={{ width: '43px', height: '42px', mr: 2, objectFit: 'contain' }} />
+                                            <Typography sx={{ fontFamily: 'Poppins', fontSize: '16px', fontWeight: 600 }}>Cash on Delivery</Typography>
+                                        </Box>
+                                        {isSlipUploaded && (
+                                            <Typography sx={{ color: '#2e7d32', fontSize: '12px', fontFamily: 'Poppins', fontWeight: 600, display: 'flex', alignItems: 'center' }}>
+                                                ✓ Attached
+                                            </Typography>
+                                        )}
                                     </Box>
-                                    {paymentMethod === 'cod' && <CashOnDeliveryDetail />}
+                                    {paymentMethod === 'cod' && <CashOnDeliveryDetail onUpload={() => setIsSlipUploaded(true)} />}
                                 </Box>
                             </Box>
                         </Box>
@@ -141,10 +220,16 @@ const Checkout = () => {
                                     <Typography sx={{ fontSize: '14px', fontFamily: 'Poppins', fontWeight: 500, mb: 1, color: '#000' }}>First Name</Typography>
                                     <TextField
                                         fullWidth
+                                        name="firstName"
+                                        value={formData.firstName}
+                                        onChange={handleInputChange}
+                                        error={!!errors.firstName}
+                                        helperText={errors.firstName}
                                         variant="outlined"
                                         size="small"
                                         sx={{
-                                            '& .MuiOutlinedInput-root': { height: '35px', borderRadius: '4px', bgcolor: '#fff' }
+                                            '& .MuiOutlinedInput-root': { height: '35px', borderRadius: '4px', bgcolor: '#fff' },
+                                            '& .MuiFormHelperText-root': { fontFamily: 'Poppins', ml: 0 }
                                         }}
                                     />
                                 </Box>
@@ -152,10 +237,16 @@ const Checkout = () => {
                                     <Typography sx={{ fontSize: '14px', fontFamily: 'Poppins', fontWeight: 500, mb: 1, color: '#000' }}>Last Name</Typography>
                                     <TextField
                                         fullWidth
+                                        name="lastName"
+                                        value={formData.lastName}
+                                        onChange={handleInputChange}
+                                        error={!!errors.lastName}
+                                        helperText={errors.lastName}
                                         variant="outlined"
                                         size="small"
                                         sx={{
-                                            '& .MuiOutlinedInput-root': { height: '35px', borderRadius: '4px', bgcolor: '#fff' }
+                                            '& .MuiOutlinedInput-root': { height: '35px', borderRadius: '4px', bgcolor: '#fff' },
+                                            '& .MuiFormHelperText-root': { fontFamily: 'Poppins', ml: 0 }
                                         }}
                                     />
                                 </Box>
@@ -163,10 +254,16 @@ const Checkout = () => {
                                     <Typography sx={{ fontSize: '14px', fontFamily: 'Poppins', fontWeight: 500, mb: 1, color: '#000' }}>Contact Number</Typography>
                                     <TextField
                                         fullWidth
+                                        name="phone"
+                                        value={formData.phone}
+                                        onChange={handleInputChange}
+                                        error={!!errors.phone}
+                                        helperText={errors.phone}
                                         variant="outlined"
                                         size="small"
                                         sx={{
-                                            '& .MuiOutlinedInput-root': { height: '35px', borderRadius: '4px', bgcolor: '#fff' }
+                                            '& .MuiOutlinedInput-root': { height: '35px', borderRadius: '4px', bgcolor: '#fff' },
+                                            '& .MuiFormHelperText-root': { fontFamily: 'Poppins', ml: 0 }
                                         }}
                                     />
                                 </Box>
@@ -174,10 +271,16 @@ const Checkout = () => {
                                     <Typography sx={{ fontSize: '14px', fontFamily: 'Poppins', fontWeight: 500, mb: 1, color: '#000' }}>Email</Typography>
                                     <TextField
                                         fullWidth
+                                        name="email"
+                                        value={formData.email}
+                                        onChange={handleInputChange}
+                                        error={!!errors.email}
+                                        helperText={errors.email}
                                         variant="outlined"
                                         size="small"
                                         sx={{
-                                            '& .MuiOutlinedInput-root': { height: '35px', borderRadius: '4px', bgcolor: '#fff' }
+                                            '& .MuiOutlinedInput-root': { height: '35px', borderRadius: '4px', bgcolor: '#fff' },
+                                            '& .MuiFormHelperText-root': { fontFamily: 'Poppins', ml: 0 }
                                         }}
                                     />
                                 </Box>
@@ -188,10 +291,16 @@ const Checkout = () => {
                                     </Box>
                                     <TextField
                                         fullWidth
+                                        name="address"
+                                        value={formData.address}
+                                        onChange={handleInputChange}
+                                        error={!!errors.address}
+                                        helperText={errors.address}
                                         variant="outlined"
                                         size="small"
                                         sx={{
-                                            '& .MuiOutlinedInput-root': { height: '35px', borderRadius: '4px', bgcolor: '#fff' }
+                                            '& .MuiOutlinedInput-root': { height: '35px', borderRadius: '4px', bgcolor: '#fff' },
+                                            '& .MuiFormHelperText-root': { fontFamily: 'Poppins', ml: 0 }
                                         }}
                                     />
                                 </Box>
@@ -199,10 +308,16 @@ const Checkout = () => {
                                     <Typography sx={{ fontSize: '14px', fontFamily: 'Poppins', fontWeight: 500, mb: 1, color: '#000' }}>Nearest City</Typography>
                                     <TextField
                                         fullWidth
+                                        name="city"
+                                        value={formData.city}
+                                        onChange={handleInputChange}
+                                        error={!!errors.city}
+                                        helperText={errors.city}
                                         variant="outlined"
                                         size="small"
                                         sx={{
-                                            '& .MuiOutlinedInput-root': { height: '35px', borderRadius: '4px', bgcolor: '#fff' }
+                                            '& .MuiOutlinedInput-root': { height: '35px', borderRadius: '4px', bgcolor: '#fff' },
+                                            '& .MuiFormHelperText-root': { fontFamily: 'Poppins', ml: 0 }
                                         }}
                                     />
                                 </Box>
@@ -211,10 +326,16 @@ const Checkout = () => {
                                     <Typography sx={{ fontSize: '14px', fontFamily: 'Poppins', fontWeight: 500, mb: 1, color: '#000' }}>District</Typography>
                                     <TextField
                                         fullWidth
+                                        name="district"
+                                        value={formData.district}
+                                        onChange={handleInputChange}
+                                        error={!!errors.district}
+                                        helperText={errors.district}
                                         variant="outlined"
                                         size="small"
                                         sx={{
-                                            '& .MuiOutlinedInput-root': { height: '35px', borderRadius: '4px', bgcolor: '#fff' }
+                                            '& .MuiOutlinedInput-root': { height: '35px', borderRadius: '4px', bgcolor: '#fff' },
+                                            '& .MuiFormHelperText-root': { fontFamily: 'Poppins', ml: 0 }
                                         }}
                                     />
                                 </Box>
@@ -238,6 +359,7 @@ const Checkout = () => {
                                     </Button>
                                     <Button
                                         variant="contained"
+                                        onClick={() => validateForm()}
                                         sx={{
                                             flex: 1,
                                             height: '35px',
@@ -284,6 +406,7 @@ const Checkout = () => {
                             <Button
                                 variant="contained"
                                 fullWidth
+                                onClick={handleConfirmAndPay}
                                 sx={{
                                     bgcolor: '#F66A74',
                                     color: '#fff',

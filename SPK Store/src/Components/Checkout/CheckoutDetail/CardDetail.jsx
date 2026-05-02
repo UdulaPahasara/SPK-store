@@ -1,7 +1,23 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Box, Typography, TextField } from '@mui/material';
 
 const CardDetail = () => {
+    const [cardData, setCardData] = useState({
+        number: '',
+        name: '',
+        exp: '',
+        cvv: ''
+    });
+    const [errors, setErrors] = useState({});
+
+    const handleInputChange = (e) => {
+        const { name, value } = e.target;
+        setCardData(prev => ({ ...prev, [name]: value }));
+        if (errors[name]) {
+            setErrors(prev => ({ ...prev, [name]: '' }));
+        }
+    };
+
     return (
         <Box sx={{
             maxWidth: '707px',
@@ -19,6 +35,11 @@ const CardDetail = () => {
                 </Typography>
                 <TextField
                     fullWidth
+                    name="number"
+                    value={cardData.number}
+                    onChange={handleInputChange}
+                    error={!!errors.number}
+                    helperText={errors.number}
                     variant="outlined"
                     size="small"
                     sx={{
@@ -27,7 +48,8 @@ const CardDetail = () => {
                             borderRadius: '8px',
                             '& fieldset': { border: 'none' }
                         },
-                        '& .MuiInputBase-input': { height: '25px', py: 1 }
+                        '& .MuiInputBase-input': { height: '25px', py: 1 },
+                        '& .MuiFormHelperText-root': { fontFamily: 'Poppins', ml: 0 }
                     }}
                 />
             </Box>
@@ -39,6 +61,11 @@ const CardDetail = () => {
                 </Typography>
                 <TextField
                     fullWidth
+                    name="name"
+                    value={cardData.name}
+                    onChange={handleInputChange}
+                    error={!!errors.name}
+                    helperText={errors.name}
                     variant="outlined"
                     size="small"
                     sx={{
@@ -47,7 +74,8 @@ const CardDetail = () => {
                             borderRadius: '8px',
                             '& fieldset': { border: 'none' }
                         },
-                        '& .MuiInputBase-input': { height: '25px', py: 1 }
+                        '& .MuiInputBase-input': { height: '25px', py: 1 },
+                        '& .MuiFormHelperText-root': { fontFamily: 'Poppins', ml: 0 }
                     }}
                 />
             </Box>
@@ -60,6 +88,12 @@ const CardDetail = () => {
                     </Typography>
                     <TextField
                         fullWidth
+                        name="exp"
+                        value={cardData.exp}
+                        onChange={handleInputChange}
+                        error={!!errors.exp}
+                        helperText={errors.exp}
+                        placeholder="MM/YY"
                         variant="outlined"
                         size="small"
                         sx={{
@@ -68,7 +102,8 @@ const CardDetail = () => {
                                 borderRadius: '8px',
                                 '& fieldset': { border: 'none' }
                             },
-                            '& .MuiInputBase-input': { height: '25px', py: 1 }
+                            '& .MuiInputBase-input': { height: '25px', py: 1 },
+                            '& .MuiFormHelperText-root': { fontFamily: 'Poppins', ml: 0 }
                         }}
                     />
                 </Box>
@@ -78,6 +113,11 @@ const CardDetail = () => {
                     </Typography>
                     <TextField
                         fullWidth
+                        name="cvv"
+                        value={cardData.cvv}
+                        onChange={handleInputChange}
+                        error={!!errors.cvv}
+                        helperText={errors.cvv}
                         variant="outlined"
                         size="small"
                         sx={{
@@ -86,7 +126,8 @@ const CardDetail = () => {
                                 borderRadius: '8px',
                                 '& fieldset': { border: 'none' }
                             },
-                            '& .MuiInputBase-input': { height: '25px', py: 1 }
+                            '& .MuiInputBase-input': { height: '25px', py: 1 },
+                            '& .MuiFormHelperText-root': { fontFamily: 'Poppins', ml: 0 }
                         }}
                     />
                 </Box>
