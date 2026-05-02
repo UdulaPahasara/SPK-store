@@ -1,4 +1,5 @@
 import React from 'react';
+import { useNavigate } from 'react-router-dom';
 import { Box, Typography, Button, Container } from '@mui/material';
 import NavBar from '../NavBar/NavBar';
 import Footer from '../Footer/Footer';
@@ -36,6 +37,7 @@ const cartItems = [
 ];
 
 const GotoCart = () => {
+    const navigate = useNavigate();
     return (
         <Box sx={{ bgcolor: '#fff', minHeight: '100vh', display: 'flex', flexDirection: 'column' }}>
             <NavBar />
@@ -65,7 +67,7 @@ const GotoCart = () => {
                 }}>
                     {/* Items List */}
                     <Box sx={{ flex: { xs: '1 1 100%', lg: '0 0 calc(62% - 16px)' } }}>
-                        <Box sx={{ display: 'flex', flexDirection: 'column', gap: 1.5, alignItems: 'center', ml: { xs: '-5px', lg: 0 } }}>
+                        <Box sx={{ display: 'flex', flexDirection: 'column', gap: 1.5, alignItems: { xs: 'center', lg: 'flex-start' }, ml: { xs: '-5px', lg: 0 } }}>
                             {cartItems.map(item => (
                                 <OneItem key={item.id} item={item} />
                             ))}
@@ -81,8 +83,7 @@ const GotoCart = () => {
                             width: '100%',
                             boxSizing: 'border-box',
                             position: { lg: 'sticky' },
-                            top: '100px',
-                            ml: { xs: '1px' }
+                            top: '100px'
                         }}>
                             <Typography sx={{
                                 fontWeight: 700,
@@ -129,6 +130,7 @@ const GotoCart = () => {
                             </Box>
 
                             <Button
+                                onClick={() => navigate('/checkout')}
                                 variant="contained"
                                 fullWidth
                                 sx={{

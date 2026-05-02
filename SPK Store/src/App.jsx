@@ -12,6 +12,7 @@ import MobileLence from './Components/MobileLence/MobileLence'
 import Others from './Components/Others/Others'
 import ItemDetail from './Components/ItemDetail/ItemDetail'
 import GotoCart from './Components/GotoCart/GotoCart'
+import Checkout from './Components/Checkout/Checkout'
 
 import './App.css'
 
@@ -31,6 +32,7 @@ function App() {
         <Route path="/other" element={<Others />} />
         <Route path="/item-detail" element={<ItemDetail />} />
         <Route path="/cart" element={<GotoCart />} />
+        <Route path="/checkout" element={<Checkout />} />
         <Route path="/login" element={<Login />} />
         <Route path="/signup" element={<Signup />} />
       </Routes>
