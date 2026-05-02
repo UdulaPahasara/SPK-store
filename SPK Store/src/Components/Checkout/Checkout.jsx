@@ -9,9 +9,12 @@ import cashOnDeliveryImg from '../../assets/Checkout/CashOnDelevery.webp';
 import card1 from '../../assets/Checkout/card1.webp';
 import card2 from '../../assets/Checkout/card2.webp';
 import card3 from '../../assets/Checkout/card3.webp';
+import CardDetail from './CheckoutDetail/CardDetail';
+import BankDetail from './CheckoutDetail/BankDetail';
+import CashOnDeliveryDetail from './CheckoutDetail/CashOnDeliveryDetail';
 
 const Checkout = () => {
-    const [paymentMethod, setPaymentMethod] = useState('card');
+    const [paymentMethod, setPaymentMethod] = useState(null);
 
     return (
         <Box sx={{ bgcolor: '#fff', minHeight: '100vh', display: 'flex', flexDirection: 'column' }}>
@@ -60,21 +63,22 @@ const Checkout = () => {
                             <Box
                                 onClick={() => setPaymentMethod('card')}
                                 sx={{
-                                    display: 'flex', alignItems: 'center', p: 2, borderBottom: '1px solid rgba(0,0,0,0.1)', cursor: 'pointer',
+                                    display: 'flex', alignItems: 'flex-start', p: 2, borderBottom: '1px solid rgba(0,0,0,0.1)', cursor: 'pointer',
                                     bgcolor: paymentMethod === 'card' ? 'rgba(0,0,0,0.02)' : 'transparent'
                                 }}
                             >
                                 <Radio
                                     checked={paymentMethod === 'card'}
-                                    sx={{ color: paymentMethod === 'card' ? '#F66A74' : 'rgba(0,0,0,0.5)', '&.Mui-checked': { color: '#F66A74' } }}
+                                    sx={{ p: { xs: 0.5, sm: 1 }, mt: -0.5, color: paymentMethod === 'card' ? '#F66A74' : 'rgba(0,0,0,0.5)', '&.Mui-checked': { color: '#F66A74' } }}
                                 />
-                                <Box sx={{ display: 'flex', flexDirection: 'column', ml: 1 }}>
+                                <Box sx={{ display: 'flex', flexDirection: 'column', ml: { xs: 0, sm: 1 }, width: '100%' }}>
                                     <Typography sx={{ fontFamily: 'Poppins', fontSize: '16px', mb: 1 }}>Add new card</Typography>
                                     <Box sx={{ display: 'flex', gap: 1, ml: { xs: '-3px' } }}>
                                         <Box component="img" src={card1} alt="card" sx={{ width: '67px', height: '25px', objectFit: 'contain', border: '1px solid rgba(0,0,0,0.1)' }} />
                                         <Box component="img" src={card2} alt="card" sx={{ width: '67px', height: '25px', objectFit: 'contain', border: '1px solid rgba(0,0,0,0.1)' }} />
                                         <Box component="img" src={card3} alt="card" sx={{ width: '67px', height: '25px', objectFit: 'contain', border: '1px solid rgba(0,0,0,0.1)' }} />
                                     </Box>
+                                    {paymentMethod === 'card' && <CardDetail />}
                                 </Box>
                             </Box>
 
@@ -82,17 +86,20 @@ const Checkout = () => {
                             <Box
                                 onClick={() => setPaymentMethod('bank')}
                                 sx={{
-                                    display: 'flex', alignItems: 'center', p: 2, borderBottom: '1px solid rgba(0,0,0,0.1)', cursor: 'pointer',
+                                    display: 'flex', alignItems: 'flex-start', p: 2, borderBottom: '1px solid rgba(0,0,0,0.1)', cursor: 'pointer',
                                     bgcolor: paymentMethod === 'bank' ? 'rgba(0,0,0,0.02)' : 'transparent'
                                 }}
                             >
                                 <Radio
                                     checked={paymentMethod === 'bank'}
-                                    sx={{ color: paymentMethod === 'bank' ? '#F66A74' : 'rgba(0,0,0,0.5)', '&.Mui-checked': { color: '#F66A74' } }}
+                                    sx={{ p: { xs: 0.5, sm: 1 }, mt: 0.5, color: paymentMethod === 'bank' ? '#F66A74' : 'rgba(0,0,0,0.5)', '&.Mui-checked': { color: '#F66A74' } }}
                                 />
-                                <Box sx={{ display: 'flex', alignItems: 'center', ml: 1 }}>
-                                    <Box component="img" src={bankTransferImg} alt="Bank Transfer" sx={{ width: '43px', height: '42px', mr: 2, objectFit: 'contain' }} />
-                                    <Typography sx={{ fontFamily: 'Poppins', fontSize: '16px', fontWeight: 600 }}>Bank Transfer</Typography>
+                                <Box sx={{ display: 'flex', flexDirection: 'column', ml: { xs: 0, sm: 1 }, width: '100%' }}>
+                                    <Box sx={{ display: 'flex', alignItems: 'center' }}>
+                                        <Box component="img" src={bankTransferImg} alt="Bank Transfer" sx={{ width: '43px', height: '42px', mr: 2, objectFit: 'contain' }} />
+                                        <Typography sx={{ fontFamily: 'Poppins', fontSize: '16px', fontWeight: 600 }}>Bank Transfer</Typography>
+                                    </Box>
+                                    {paymentMethod === 'bank' && <BankDetail />}
                                 </Box>
                             </Box>
 
@@ -100,17 +107,20 @@ const Checkout = () => {
                             <Box
                                 onClick={() => setPaymentMethod('cod')}
                                 sx={{
-                                    display: 'flex', alignItems: 'center', p: 2, cursor: 'pointer',
+                                    display: 'flex', alignItems: 'flex-start', p: 2, cursor: 'pointer',
                                     bgcolor: paymentMethod === 'cod' ? 'rgba(0,0,0,0.02)' : 'transparent'
                                 }}
                             >
                                 <Radio
                                     checked={paymentMethod === 'cod'}
-                                    sx={{ color: paymentMethod === 'cod' ? '#F66A74' : 'rgba(0,0,0,0.5)', '&.Mui-checked': { color: '#F66A74' } }}
+                                    sx={{ p: { xs: 0.5, sm: 1 }, mt: 0.5, color: paymentMethod === 'cod' ? '#F66A74' : 'rgba(0,0,0,0.5)', '&.Mui-checked': { color: '#F66A74' } }}
                                 />
-                                <Box sx={{ display: 'flex', alignItems: 'center', ml: 1 }}>
-                                    <Box component="img" src={cashOnDeliveryImg} alt="Cash on Delivery" sx={{ width: '43px', height: '42px', mr: 2, objectFit: 'contain' }} />
-                                    <Typography sx={{ fontFamily: 'Poppins', fontSize: '16px', fontWeight: 600 }}>Cash on Delivery</Typography>
+                                <Box sx={{ display: 'flex', flexDirection: 'column', ml: { xs: 0, sm: 1 }, width: '100%' }}>
+                                    <Box sx={{ display: 'flex', alignItems: 'center' }}>
+                                        <Box component="img" src={cashOnDeliveryImg} alt="Cash on Delivery" sx={{ width: '43px', height: '42px', mr: 2, objectFit: 'contain' }} />
+                                        <Typography sx={{ fontFamily: 'Poppins', fontSize: '16px', fontWeight: 600 }}>Cash on Delivery</Typography>
+                                    </Box>
+                                    {paymentMethod === 'cod' && <CashOnDeliveryDetail />}
                                 </Box>
                             </Box>
                         </Box>
