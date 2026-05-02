@@ -3,6 +3,7 @@ import {
     Box, Drawer, Typography, IconButton, Button,
     Divider, Checkbox, Stack
 } from '@mui/material';
+import { useNavigate } from 'react-router-dom';
 import CloseIcon from '@mui/icons-material/Close';
 import AddIcon from '@mui/icons-material/Add';
 import RemoveIcon from '@mui/icons-material/Remove';
@@ -88,6 +89,7 @@ const CartItem = ({ item, onToggle, onUpdateQuantity, onDelete }) => (
 );
 
 const CartDrawer = ({ open, onClose }) => {
+    const navigate = useNavigate();
     const [items, setItems] = useState([
         { id: 1, image: item1, name: 'DJI Mavic Pro Drone with 3 Battery', price: 379500, checked: false, quantity: 1 },
         { id: 2, image: item2, name: 'DJI Mavic Pro Drone with 3 Battery', price: 379500, checked: true, quantity: 1 },
@@ -169,6 +171,10 @@ const CartDrawer = ({ open, onClose }) => {
                 <Button
                     fullWidth
                     variant="outlined"
+                    onClick={() => {
+                        navigate('/cart');
+                        onClose();
+                    }}
                     sx={{
                         borderColor: '#F66A74', color: '#F66A74', py: 1.6,
                         borderRadius: '10px', fontWeight: 700, textTransform: 'none',

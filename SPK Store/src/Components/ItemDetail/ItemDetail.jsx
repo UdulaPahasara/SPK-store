@@ -26,7 +26,7 @@ const ItemDetail = () => {
     };
 
     return (
-        <Box sx={{ bgcolor: '#FDFDFD', minHeight: '100vh', pb: 10 }}>
+        <Box sx={{ bgcolor: '#FDFDFD', minHeight: '100vh' }}>
             <NavBar />
 
             <Box sx={{
@@ -160,7 +160,7 @@ const ItemDetail = () => {
                             </Box>
                         </Box>
 
-                        <Box sx={{ display: 'flex', alignItems: 'center', gap: 1, color: '#000' }}>
+                        <Box sx={{ display: 'flex', alignItems: 'center', gap: 1, color: '#000', mt: { xs: 3, md: 3 } }}>
                             <Typography sx={{ fontSize: '13px', fontWeight: 600 }}>6 Months Warranty</Typography>
                             <ShieldOutlinedIcon sx={{ fontSize: 18, color: '#F66A74' }} />
                         </Box>
@@ -288,37 +288,7 @@ const ItemDetail = () => {
                         textAlign: 'center',
                         overflow: 'hidden'
                     }}>
-                        {/* Banner Overlay Text */}
-                        <Box sx={{ maxWidth: '80%', px: 2 }}>
-                            <Typography sx={{ fontSize: '14px', fontWeight: 600, opacity: 0.9, letterSpacing: 1, mb: 1 }}>
-                                New
-                            </Typography>
-                            <Typography variant="h3" sx={{
-                                fontFamily: 'Poppins', fontWeight: 700,
-                                fontSize: { xs: '2rem', md: '3.5rem' },
-                                textTransform: 'uppercase', mb: 1
-                            }}>
-                                DJI MINI 2
-                            </Typography>
-                            <Typography sx={{ fontSize: '18px', fontWeight: 500, mb: 3 }}>
-                                Make Your Moments Fly
-                            </Typography>
-                            <Button
-                                variant="outlined"
-                                sx={{
-                                    color: 'white',
-                                    borderColor: 'white',
-                                    borderRadius: '20px',
-                                    px: 3, py: 1,
-                                    textTransform: 'none',
-                                    fontSize: '14px',
-                                    borderWeight: '1.5px',
-                                    '&:hover': { bgcolor: 'rgba(255,255,255,0.1)', borderColor: 'white' }
-                                }}
-                            >
-                                Learn More &gt;
-                            </Button>
-                        </Box>
+
                     </Box>
                 </Box>
             </Box>

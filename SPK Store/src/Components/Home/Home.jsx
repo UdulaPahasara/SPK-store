@@ -251,7 +251,7 @@ const Home = () => {
                         left: 0,
                         width: '100%',
                         height: '100%',
-                        objectFit: 'cover',
+                        objectFit: 'fill',
                         zIndex: 1
                     }}
                 />
@@ -480,118 +480,52 @@ const Home = () => {
             <Box component="section" sx={{
                 width: '100%',
                 maxWidth: '1240px',
-                px: { xs: 2, md: 2 },
+                px: { xs: 4, md: 2 },
                 mb: { xs: '50px', md: '100px' },
                 overflow: 'hidden',
                 mx: 'auto'
             }}>
                 <Typography variant="h3" sx={{
+                    width: '100%',
                     fontSize: '1.8rem',
                     fontWeight: 700,
                     mb: 4,
-                    textAlign: 'left',
-                    fontFamily: 'Poppins'
+                    ml: { xs: '-20px', md: 0 },
+                    fontFamily: 'Poppins, sans-serif',
+                    textAlign: { xs: 'center', md: 'left' }
                 }}>
                     Hot Deals
                 </Typography>
 
-                <Box sx={{
-                    display: 'flex',
-                    flexDirection: 'row',
-                    gap: 3,
-                    alignItems: 'flex-start'
-                }}>
-                    {/* Main Deal Card */}
-                    <Box sx={{
-                        width: '520px',
-                        height: '413px',
-                        position: 'relative',
-                        borderRadius: '16px',
-                        overflow: 'hidden',
-                        flexShrink: 0,
-                        display: { xs: 'none', md: 'block' }
+                <Box
+                    ref={scrollRef}
+                    sx={{
+                        display: 'flex',
+                        gap: 3,
+                        flexWrap: 'nowrap',
+                        overflowX: 'auto',
+                        width: '100%',
+                        pb: 1,
+                        cursor: 'grab',
+                        '&::-webkit-scrollbar': { display: 'none' },
+                        msOverflowStyle: 'none',
+                        scrollbarWidth: 'none',
+                        scrollSnapType: isMobile ? 'x mandatory' : 'none',
+                        '& > *': {
+                            scrollSnapAlign: isMobile ? 'start' : 'none'
+                        }
                     }}>
-                        <Box
-                            component="img"
-                            src={mainDeal}
-                            sx={{
-                                width: '100%',
-                                height: '100%',
-                                objectFit: 'cover'
+                    {[...hotDeals, ...hotDeals].map((deal, index) => (
+                        <ProductCard
+                            key={`deal-${index}`}
+                            product={deal}
+                            containerSx={{
+                                width: { xs: '240px', md: '273px' },
+                                height: { xs: '290px', md: '380px' },
+                                padding: { xs: '10px', md: '20px' }
                             }}
                         />
-                        <Box sx={{
-                            position: 'absolute',
-                            bottom: 0,
-                            left: 0,
-                            width: '100%',
-                            height: '50%',
-                            display: 'flex',
-                            flexDirection: 'column',
-                            justifyContent: 'flex-end',
-                            alignItems: 'center',
-                            padding: '30px',
-                            background: 'linear-gradient(to top, rgba(0,0,0,0.6), transparent)'
-                        }}>
-                            <Typography sx={{
-                                color: '#fff',
-                                fontSize: '1.3rem',
-                                fontWeight: 700,
-                                mb: 2.5,
-                                fontFamily: 'Poppins'
-                            }}>
-                                DJI Mavic Pro 3
-                            </Typography>
-                            <Button
-                                variant="contained"
-                                sx={{
-                                    bgcolor: '#fff',
-                                    color: '#000',
-                                    textTransform: 'uppercase',
-                                    borderRadius: '8px',
-                                    padding: '12px 40px',
-                                    fontSize: '0.9rem',
-                                    fontWeight: 700,
-                                    fontFamily: 'Poppins',
-                                    '&:hover': { bgcolor: '#f0f0f0' }
-                                }}
-                            >
-                                SHOP NOW
-                            </Button>
-                        </Box>
-                    </Box>
-
-                    {/* Secondary Deal Cards Wrapper: Swipeable */}
-                    <Box
-                        ref={scrollRef}
-                        sx={{
-                            display: 'flex',
-                            gap: 3,
-                            flexWrap: 'nowrap',
-                            overflowX: 'auto',
-                            width: '100%',
-                            pb: 1,
-                            cursor: 'grab',
-                            '&::-webkit-scrollbar': { display: 'none' },
-                            msOverflowStyle: 'none',
-                            scrollbarWidth: 'none',
-                            scrollSnapType: isMobile ? 'x mandatory' : 'none',
-                            '& > *': {
-                                scrollSnapAlign: isMobile ? 'center' : 'none'
-                            }
-                        }}>
-                        {[...hotDeals, ...hotDeals].map((deal, index) => (
-                            <ProductCard
-                                key={`deal-${index}`}
-                                product={deal}
-                                containerSx={{
-                                    width: { xs: '240px', md: '273px' },
-                                    height: { xs: '290px', md: '380px' },
-                                    padding: { xs: '10px', md: '20px' }
-                                }}
-                            />
-                        ))}
-                    </Box>
+                    ))}
                 </Box>
             </Box>
 
@@ -599,15 +533,18 @@ const Home = () => {
             <Box component="section" sx={{
                 width: '100%',
                 maxWidth: '1240px',
-                px: { xs: 2, md: 2 },
+                px: { xs: 4, md: 2 },
                 mb: { xs: '50px', md: '100px' },
                 mx: 'auto'
             }}>
                 <Typography variant="h3" sx={{
+                    width: '100%',
                     fontSize: '1.8rem',
                     fontWeight: 700,
                     mb: 4,
-                    fontFamily: 'Poppins, sans-serif'
+                    ml: { xs: '-20px', md: 0 },
+                    fontFamily: 'Poppins, sans-serif',
+                    textAlign: { xs: 'center', md: 'left' }
                 }}>
                     Popular Products
                 </Typography>
@@ -627,7 +564,7 @@ const Home = () => {
                         scrollbarWidth: 'none',
                         scrollSnapType: isMobile ? 'x mandatory' : 'none',
                         '& > *': {
-                            scrollSnapAlign: isMobile ? 'center' : 'none'
+                            scrollSnapAlign: isMobile ? 'start' : 'none'
                         }
                     }}>
                     {[...popularProducts, ...popularProducts].map((product, index) => (
@@ -637,8 +574,7 @@ const Home = () => {
                             containerSx={{
                                 width: { xs: '240px', md: '273px' },
                                 height: { xs: '320px', md: '380px' },
-                                padding: { xs: '10px', md: '20px' },
-                                left: { xs: '-10px', md: '20px' }
+                                padding: { xs: '10px', md: '20px' }
                             }}
                         />
                     ))}
@@ -852,11 +788,13 @@ const Home = () => {
                 mx: 'auto'
             }}>
                 <Typography variant="h3" sx={{
+                    width: '100%',
                     fontSize: '1.4rem',
                     fontWeight: 700,
                     mb: 4,
                     fontFamily: 'Poppins, sans-serif',
-                    color: '#000'
+                    color: '#000',
+                    textAlign: { xs: 'center', md: 'left' }
                 }}>
                     Our Brands
                 </Typography>
@@ -1017,7 +955,6 @@ const Home = () => {
             {/* Last Banner Section */}
             <Box component="section" sx={{
                 width: '100%',
-                height: { xs: '200px', sm: '280px', md: '400px', lg: '496px' },
                 mt: 0,
                 mb: 0,
                 display: 'flex',
@@ -1032,8 +969,8 @@ const Home = () => {
                     alt="Latest Offer"
                     sx={{
                         width: '100%',
-                        height: '100%',
-                        objectFit: 'cover'
+                        height: 'auto',
+                        objectFit: 'contain'
                     }}
                 />
             </Box>
