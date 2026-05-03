@@ -13,6 +13,7 @@ import Others from './Components/Others/Others'
 import ItemDetail from './Components/ItemDetail/ItemDetail'
 import GotoCart from './Components/GotoCart/GotoCart'
 import Checkout from './Components/Checkout/Checkout'
+import Confirmation from './Components/Confirmation/Confirmation'
 
 import './App.css'
 
@@ -33,6 +34,7 @@ function App() {
         <Route path="/item-detail" element={<ItemDetail />} />
         <Route path="/cart" element={<GotoCart />} />
         <Route path="/checkout" element={<Checkout />} />
+        <Route path="/confirmation" element={<Confirmation />} />
         <Route path="/login" element={<Login />} />
         <Route path="/signup" element={<Signup />} />
       </Routes>

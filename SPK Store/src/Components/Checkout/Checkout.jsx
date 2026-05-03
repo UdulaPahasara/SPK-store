@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { Box, Typography, Button, Radio, TextField, Grid, Container } from '@mui/material';
 import NavBar from '../NavBar/NavBar';
 import Footer from '../Footer/Footer';
@@ -14,6 +15,7 @@ import BankDetail from './CheckoutDetail/BankDetail';
 import CashOnDeliveryDetail from './CheckoutDetail/CashOnDeliveryDetail';
 
 const Checkout = () => {
+    const navigate = useNavigate();
     const [paymentMethod, setPaymentMethod] = useState(null);
     const [isSlipUploaded, setIsSlipUploaded] = useState(false);
     const [formData, setFormData] = useState({
@@ -62,8 +64,7 @@ const Checkout = () => {
 
     const handleConfirmAndPay = () => {
         if (validateForm()) {
-            alert('Order placed successfully!');
-            // Here you would typically call your API
+            navigate('/confirmation');
         } else {
             alert('Please fix the errors before proceeding.');
         }
