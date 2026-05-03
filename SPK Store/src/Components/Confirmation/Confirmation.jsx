@@ -68,8 +68,8 @@ const Confirmation = () => {
                 </Typography>
 
                 <Grid container spacing={6}>
-                    {/* Left Column: Order & Shipping */}
-                    <Grid item xs={12} md={7.5}>
+                    {/* Left Column: Order Information */}
+                    <Grid item xs={12} md={6}>
                         <Box sx={{ mb: 6, display: 'flex', flexDirection: { xs: 'column', sm: 'row' }, gap: { xs: 3, sm: 10 } }}>
                             <Box sx={{ display: 'flex', alignItems: 'center', gap: 1.5, minWidth: '250px' }}>
                                 <Typography variant="h6" sx={{ fontFamily: 'Poppins', fontWeight: 700, fontSize: '24px', color: '#000' }}>
@@ -117,8 +117,11 @@ const Confirmation = () => {
                                 ))}
                             </Box>
                         </Box>
+                    </Grid>
 
-                        <Typography sx={{ fontFamily: 'Poppins', fontWeight: 700, fontSize: '18px', mb: 2 }}>
+                    {/* Middle Column: Shipping details */}
+                    <Grid item xs={12} md={3}>
+                        <Typography variant="h5" sx={{ fontFamily: 'Poppins', fontWeight: 700, mb: 4, fontSize: '20px' }}>
                             Shipping details
                         </Typography>
                         <Box sx={{ mb: 6 }}>
@@ -130,27 +133,30 @@ const Confirmation = () => {
                         </Box>
                     </Grid>
 
-                    <Grid item xs={12} md={4.5}>
-                        <Typography variant="h5" sx={{ fontFamily: 'Poppins', fontWeight: 700, mb: 4, fontSize: '24px', ml: { xs: 0, md: 8 } }}>
-                            Payment information
-                        </Typography>
-                        <Box sx={{ ml: { xs: 0, md: 8 } }}>
-                            <Box sx={{ display: 'flex', justifyContent: 'space-between', mb: 1 }}>
-                                <Typography sx={{ fontFamily: 'Poppins', fontSize: '16px', fontWeight: 500, color: '#000' }}>{orderData.payment.itemsCount} item</Typography>
-                                <Typography sx={{ fontFamily: 'Poppins', fontSize: '16px', fontWeight: 500, color: '#000' }}>{orderData.payment.itemsPrice}</Typography>
-                            </Box>
-                            <Box sx={{ display: 'flex', justifyContent: 'space-between', mb: 1 }}>
-                                <Typography sx={{ fontFamily: 'Poppins', fontSize: '16px', fontWeight: 500, color: '#000' }}>Shipping Fee</Typography>
-                                <Typography sx={{ fontFamily: 'Poppins', fontSize: '16px', fontWeight: 500, color: '#000' }}>{orderData.payment.shippingFee}</Typography>
-                            </Box>
-                            <Box sx={{ display: 'flex', justifyContent: 'space-between', mb: 1 }}>
-                                <Typography sx={{ fontFamily: 'Poppins', fontSize: '16px', fontWeight: 500, color: '#000' }}>Saved</Typography>
-                                <Typography sx={{ fontFamily: 'Poppins', fontSize: '16px', fontWeight: 500, color: '#F66A74' }}>-{orderData.payment.saved}</Typography>
-                            </Box>
-                            <Divider sx={{ my: 1.5, bgcolor: 'rgba(0,0,0,0.1)' }} />
-                            <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-                                <Typography sx={{ fontFamily: 'Poppins', fontWeight: 800, fontSize: '18px', color: '#000' }}>Order Total</Typography>
-                                <Typography sx={{ fontFamily: 'Poppins', fontWeight: 800, fontSize: '18px', color: '#000' }}>{orderData.payment.orderTotal}</Typography>
+                    {/* Right Column: Payment information */}
+                    <Grid item xs={12} md={3}>
+                        <Box sx={{ ml: { xs: 0, sm: 12, md: 12 } }}>
+                            <Typography variant="h5" sx={{ fontFamily: 'Poppins', fontWeight: 700, mb: 4, fontSize: '20px' }}>
+                                Payment information
+                            </Typography>
+                            <Box sx={{ mb: 6 }}>
+                                <Box sx={{ display: 'flex', justifyContent: 'space-between', mb: 0.5 }}>
+                                    <Typography sx={{ fontFamily: 'Poppins', fontSize: '14px', fontWeight: 500, color: '#000' }}>{orderData.payment.itemsCount} item</Typography>
+                                    <Typography sx={{ fontFamily: 'Poppins', fontSize: '14px', fontWeight: 500, color: '#000' }}>{orderData.payment.itemsPrice}</Typography>
+                                </Box>
+                                <Box sx={{ display: 'flex', justifyContent: 'space-between', mb: 0.5 }}>
+                                    <Typography sx={{ fontFamily: 'Poppins', fontSize: '14px', fontWeight: 500, color: '#000' }}>Shipping Fee</Typography>
+                                    <Typography sx={{ fontFamily: 'Poppins', fontSize: '14px', fontWeight: 500, color: '#000' }}>{orderData.payment.shippingFee}</Typography>
+                                </Box>
+                                <Box sx={{ display: 'flex', justifyContent: 'space-between', mb: 0.5 }}>
+                                    <Typography sx={{ fontFamily: 'Poppins', fontSize: '14px', fontWeight: 500, color: '#000' }}>Saved</Typography>
+                                    <Typography sx={{ fontFamily: 'Poppins', fontSize: '14px', fontWeight: 500, color: '#F66A74' }}>-{orderData.payment.saved}</Typography>
+                                </Box>
+                                <Divider sx={{ my: 1.5, bgcolor: 'rgba(0,0,0,0.1)' }} />
+                                <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                                    <Typography sx={{ fontFamily: 'Poppins', fontWeight: 800, fontSize: '16px', color: '#000' }}>Order Total</Typography>
+                                    <Typography sx={{ fontFamily: 'Poppins', fontWeight: 800, fontSize: '16px', color: '#000' }}>{orderData.payment.orderTotal}</Typography>
+                                </Box>
                             </Box>
                         </Box>
                     </Grid>
