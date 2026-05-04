@@ -7,6 +7,7 @@ import EmailIcon from '@mui/icons-material/Email';
 import fbIcon from '../../assets/Footer/fb.webp';
 import instaIcon from '../../assets/Footer/insta.webp';
 import tiktokIcon from '../../assets/Footer/tiktok.webp';
+import instaVector from '../../assets/Footer/Vector.webp';
 
 const Footer = () => {
     return (
@@ -116,9 +117,34 @@ const Footer = () => {
 
                     {/* Social Media Icons */}
                     <Box sx={{ display: 'flex', gap: 2 }}>
-                        {[fbIcon, tiktokIcon, instaIcon].map((icon, idx) => (
-                            <Link key={idx} href="#" sx={{ display: 'flex', alignItems: 'center' }}>
-                                <Box component="img" src={icon} alt="social" sx={{ width: '18px', height: '18px', objectFit: 'contain' }} />
+                        {[
+                            { icon: fbIcon, isVector: false },
+                            { icon: tiktokIcon, isVector: false },
+                            { icon: instaVector, isVector: true, bg: instaIcon }
+                        ].map((item, idx) => (
+                            <Link key={idx} href="#" sx={{
+                                display: 'flex',
+                                alignItems: 'center',
+                                position: 'relative',
+                                transition: 'transform 0.2s',
+                                '&:hover': { transform: 'scale(1.1)' }
+                            }}>
+                                {item.isVector ? (
+                                    <>
+                                        <Box component="img" src={item.bg} alt="social circle" sx={{ width: '32px', height: '32px', objectFit: 'contain' }} />
+                                        <Box component="img" src={item.icon} alt="social icon" sx={{
+                                            position: 'absolute',
+                                            top: '50%',
+                                            left: '50%',
+                                            transform: 'translate(-50%, -50%)',
+                                            width: '20px',
+                                            height: '20px',
+                                            objectFit: 'contain'
+                                        }} />
+                                    </>
+                                ) : (
+                                    <Box component="img" src={item.icon} alt="social" sx={{ width: '32px', height: '32px', objectFit: 'contain' }} />
+                                )}
                             </Link>
                         ))}
                     </Box>

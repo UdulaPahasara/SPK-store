@@ -39,7 +39,7 @@ const Confirmation = () => {
     ];
 
     return (
-        <Box sx={{ minHeight: '100vh', display: 'flex', flexDirection: 'column', bgcolor: '#fff' }}>
+        <Box sx={{ minHeight: '100vh', display: 'flex', flexDirection: 'column', bgcolor: '#fff', ml: { xs: 2 } }}>
             <NavBar />
 
             <Container maxWidth="lg" sx={{ mt: { xs: 4, md: 8 }, mb: 8, flex: 1 }}>
@@ -67,19 +67,19 @@ const Confirmation = () => {
                     Confirmation
                 </Typography>
 
-                <Grid container spacing={6}>
-                    {/* Left Column: Order Information */}
-                    <Grid item xs={12} md={6}>
-                        <Box sx={{ mb: 6, display: 'flex', flexDirection: { xs: 'column', sm: 'row' }, gap: { xs: 3, sm: 10 } }}>
-                            <Box sx={{ display: 'flex', alignItems: 'center', gap: 1.5, minWidth: '250px' }}>
+                <Grid container spacing={4}>
+                    {/* Left Column: Order Information & Shipping details */}
+                    <Grid item xs={12} md={4}>
+                        <Box sx={{ mb: 6 }}>
+                            <Box sx={{ display: 'flex', alignItems: 'center', gap: 1.5, mb: 6 }}>
                                 <Typography variant="h6" sx={{ fontFamily: 'Poppins', fontWeight: 700, fontSize: '24px', color: '#000' }}>
                                     Order information
                                 </Typography>
                                 <Box sx={{ position: 'relative', display: 'flex', alignItems: 'center' }}>
-                                    <LocalMallOutlinedIcon sx={{ fontSize: '28px', color: '#000' }} />
+                                    <LocalMallOutlinedIcon sx={{ fontSize: '24px', color: '#000' }} />
                                     <Typography sx={{
                                         position: 'absolute',
-                                        fontSize: '10px',
+                                        fontSize: '8px',
                                         fontWeight: 900,
                                         bottom: '6px',
                                         left: '50%',
@@ -89,70 +89,70 @@ const Confirmation = () => {
                                 </Box>
                             </Box>
 
-                            <Box sx={{ flex: 1, ml: { xs: 0, sm: 5 }, mt: { xs: 2, sm: 3 } }}>
-                                {[
-                                    { label: 'Time placed', value: orderData.timePlaced },
-                                    { label: 'Order number', value: orderData.orderNumber },
-                                    { label: 'Total', value: orderData.total }
-                                ].map((item, index) => (
-                                    <Box key={index} sx={{ display: 'flex', mb: 1, alignItems: 'flex-start' }}>
-                                        <Typography sx={{
-                                            width: { xs: '120px', sm: '150px' },
-                                            fontFamily: 'Poppins',
-                                            color: '#717171',
-                                            fontSize: '15px'
-                                        }}>
-                                            {item.label}
-                                        </Typography>
-                                        <Typography sx={{
-                                            flex: 1,
-                                            fontFamily: 'Poppins',
-                                            fontWeight: 500,
-                                            fontSize: '15px',
-                                            color: '#000'
-                                        }}>
-                                            {item.value}
-                                        </Typography>
-                                    </Box>
-                                ))}
+                            <Box sx={{ mt: 2 }}>
+                                <Typography variant="h5" sx={{ fontFamily: 'Poppins', fontWeight: 700, mb: 3, fontSize: '20px' }}>
+                                    Shipping details
+                                </Typography>
+                                <Typography sx={{ fontFamily: 'Poppins', fontWeight: 600, fontSize: '14px', mb: 0.5 }}>{orderData.shipping.name}</Typography>
+                                <Typography sx={{ fontFamily: 'Poppins', color: '#000', fontSize: '13px', lineHeight: 1.6, whiteSpace: 'pre-line', mb: 1 }}>
+                                    {orderData.shipping.address}
+                                </Typography>
+                                <Typography sx={{ fontFamily: 'Poppins', color: '#000', fontSize: '13px' }}>{orderData.shipping.phone}</Typography>
                             </Box>
                         </Box>
                     </Grid>
 
-                    {/* Middle Column: Shipping details */}
-                    <Grid item xs={12} md={3}>
-                        <Typography variant="h5" sx={{ fontFamily: 'Poppins', fontWeight: 700, mb: 4, fontSize: '20px' }}>
-                            Shipping details
-                        </Typography>
-                        <Box sx={{ mb: 6 }}>
-                            <Typography sx={{ fontFamily: 'Poppins', fontWeight: 600, fontSize: '14px', mb: 0.5 }}>{orderData.shipping.name}</Typography>
-                            <Typography sx={{ fontFamily: 'Poppins', color: '#000', fontSize: '13px', lineHeight: 1.6, whiteSpace: 'pre-line', mb: 1 }}>
-                                {orderData.shipping.address}
-                            </Typography>
-                            <Typography sx={{ fontFamily: 'Poppins', color: '#000', fontSize: '13px' }}>{orderData.shipping.phone}</Typography>
+                    {/* Middle Column: Order Metadata */}
+                    <Grid item xs={12} md={4}>
+                        <Box sx={{ mt: { md: 10 } }}>
+                            {[
+                                { label: 'Time placed', value: orderData.timePlaced },
+                                { label: 'Order number', value: orderData.orderNumber },
+                                { label: 'Total', value: orderData.total }
+                            ].map((item, index) => (
+                                <Box key={index} sx={{ display: 'flex', mb: 1.5, alignItems: 'flex-start' }}>
+                                    <Typography sx={{
+                                        width: '140px',
+                                        fontFamily: 'Poppins',
+                                        color: '#717171',
+                                        fontSize: '14px'
+                                    }}>
+                                        {item.label}
+                                    </Typography>
+                                    <Typography sx={{
+                                        flex: 1,
+                                        fontFamily: 'Poppins',
+                                        fontWeight: 500,
+                                        fontSize: '14px',
+                                        color: '#000'
+                                    }}>
+                                        {item.value}
+                                    </Typography>
+                                </Box>
+                            ))}
                         </Box>
                     </Grid>
 
                     {/* Right Column: Payment information */}
-                    <Grid item xs={12} md={3}>
-                        <Box sx={{ ml: { xs: 0, sm: 12, md: 12 } }}>
+                    <Grid item xs={12} md={4}>
+                        <Box sx={{ ml: { md: 4 } }}>
                             <Typography variant="h5" sx={{ fontFamily: 'Poppins', fontWeight: 700, mb: 4, fontSize: '20px' }}>
                                 Payment information
                             </Typography>
                             <Box sx={{ mb: 6 }}>
-                                <Box sx={{ display: 'flex', justifyContent: 'space-between', mb: 0.5 }}>
+                                <Box sx={{ display: 'flex', justifyContent: 'space-between', mb: 1 }}>
                                     <Typography sx={{ fontFamily: 'Poppins', fontSize: '14px', fontWeight: 500, color: '#000' }}>{orderData.payment.itemsCount} item</Typography>
                                     <Typography sx={{ fontFamily: 'Poppins', fontSize: '14px', fontWeight: 500, color: '#000' }}>{orderData.payment.itemsPrice}</Typography>
                                 </Box>
-                                <Box sx={{ display: 'flex', justifyContent: 'space-between', mb: 0.5 }}>
+                                <Box sx={{ display: 'flex', justifyContent: 'space-between', mb: 1 }}>
                                     <Typography sx={{ fontFamily: 'Poppins', fontSize: '14px', fontWeight: 500, color: '#000' }}>Shipping Fee</Typography>
                                     <Typography sx={{ fontFamily: 'Poppins', fontSize: '14px', fontWeight: 500, color: '#000' }}>{orderData.payment.shippingFee}</Typography>
                                 </Box>
-                                <Box sx={{ display: 'flex', justifyContent: 'space-between', mb: 0.5 }}>
+                                <Box sx={{ display: 'flex', justifyContent: 'space-between', mb: 1 }}>
                                     <Typography sx={{ fontFamily: 'Poppins', fontSize: '14px', fontWeight: 500, color: '#000' }}>Saved</Typography>
                                     <Typography sx={{ fontFamily: 'Poppins', fontSize: '14px', fontWeight: 500, color: '#F66A74' }}>-{orderData.payment.saved}</Typography>
                                 </Box>
-                                <Divider sx={{ my: 1.5, bgcolor: 'rgba(0,0,0,0.1)' }} />
+                                <Divider sx={{ my: 2, bgcolor: 'rgba(0,0,0,0.1)' }} />
                                 <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
                                     <Typography sx={{ fontFamily: 'Poppins', fontWeight: 800, fontSize: '16px', color: '#000' }}>Order Total</Typography>
                                     <Typography sx={{ fontFamily: 'Poppins', fontWeight: 800, fontSize: '16px', color: '#000' }}>{orderData.payment.orderTotal}</Typography>
@@ -190,8 +190,10 @@ const Confirmation = () => {
                     </Box>
                 </Box>
             </Container>
-
-            <Footer />
+           <Box sx={{ml:{md:-2}}}>
+             <Footer />
+           </Box>
+            
         </Box>
     );
 };
