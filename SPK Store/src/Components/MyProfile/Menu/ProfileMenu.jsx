@@ -28,13 +28,14 @@ const ProfileMenu = () => {
             padding: '20px',
             bgcolor: '#fff',
             fontFamily: 'Poppins, sans-serif',
-            ml: '109px',
-            mt: '150px'
+            
+            mt: '10px'
         }}>
             {/* User Section */}
             <Box sx={{
-                width: '363px',
-                height: '133px',
+                width: { xs: '100%', sm: '363px' },
+                height: { xs: 'auto', sm: '133px' },
+                minHeight: '133px',
                 display: 'flex',
                 alignItems: 'center',
                 gap: '20px',
@@ -85,7 +86,7 @@ const ProfileMenu = () => {
                         onClick={() => setActiveItem(item.label)}
                         startIcon={<item.icon />}
                         sx={{
-                            width: '363px',
+                            width: { xs: '100%', sm: '363px' },
                             height: '48px',
                             display: 'flex',
                             justifyContent: 'flex-start',
