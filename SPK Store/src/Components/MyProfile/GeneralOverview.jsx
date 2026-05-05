@@ -50,7 +50,7 @@ const GeneralOverview = () => {
             <NavBar />
 
             {/* Mobile Hamburger Button */}
-            <Box sx={{ display: { xs: 'flex', lg: 'none' }, px: 1, mt: 0, p: 1 }}>
+            <Box sx={{ display: { xs: 'flex', md: 'none' }, px: 1, mt: 0, p: 1 }}>
                 <IconButton onClick={handleDrawerToggle} sx={{ bgcolor: '#F66A74', color: '#fff', '&:hover': { bgcolor: '#e05963' } }}>
                     <MenuIcon />
                 </IconButton>
@@ -58,13 +58,13 @@ const GeneralOverview = () => {
 
             <Box sx={{
                 display: 'flex',
-                flexDirection: { xs: 'column', lg: 'row' },
+                flexDirection: { xs: 'column', md: 'row' },
                 mb: '60px',
-                gap: { xs: '20px', lg: '34px' }, // 506 - (109 + 363) = 34
-                alignItems: { xs: 'center', lg: 'flex-start' }
+                gap: { xs: '20px', md: '34px' }, // 506 - (109 + 363) = 34
+                alignItems: { xs: 'center', md: 'flex-start' }
             }}>
                 {/* Desktop Profile Menu */}
-                <Box sx={{ display: { xs: 'none', lg: 'block' } }}>
+                <Box sx={{ display: { xs: 'none', md: 'block' } }}>
                     <ProfileMenu />
                 </Box>
 
@@ -75,7 +75,7 @@ const GeneralOverview = () => {
                     onClose={handleDrawerToggle}
                     ModalProps={{ keepMounted: true }}
                     sx={{
-                        display: { xs: 'block', lg: 'none' },
+                        display: { xs: 'block', md: 'none' },
                         '& .MuiDrawer-paper': { boxSizing: 'border-box' },
                     }}
                 >
@@ -91,10 +91,11 @@ const GeneralOverview = () => {
                     display: 'flex',
                     flexDirection: 'column',
                     gap: '20px',
-                    mt: { xs: 0, lg: '29px' }, // Matching ProfileMenu mt
-                    width: '100%',
+                    mt: { xs: 0, md: '29px' }, // Matching ProfileMenu mt
+                    flex: 1,
+                    width: { xs: '100%', md: 'auto' },
                     maxWidth: '814px',
-                    px: { xs: 2, lg: 0 },
+                    px: { xs: 2, md: 2 },
                     boxSizing: 'border-box'
                 }}>
 
@@ -103,10 +104,10 @@ const GeneralOverview = () => {
                         width: 'auto',
                         maxWidth: '814px',
                         height: 'auto',
-                        minHeight: { lg: '407px' },
+                        minHeight: { md: '407px' },
                         border: '1px solid #D1D1D1',
                         borderRadius: '5px',
-                        padding: { xs: '20px', lg: '30px 40px' },
+                        padding: { xs: '20px', md: '30px 40px' },
                         boxSizing: 'border-box',
 
                     }}>
@@ -181,10 +182,10 @@ const GeneralOverview = () => {
                         width: 'auto',
                         maxWidth: '814px',
                         height: 'auto',
-                        minHeight: { lg: '231px' },
+                        minHeight: { md: '231px' },
                         border: '1px solid #D1D1D1',
                         borderRadius: '5px',
-                        padding: { xs: '20px', lg: '30px 40px' },
+                        padding: { xs: '20px', md: '30px 40px' },
                         boxSizing: 'border-box',
 
                     }}>
