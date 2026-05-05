@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { Routes, Route, useLocation } from 'react-router-dom'
 import { GoogleOAuthProvider } from '@react-oauth/google'
 
@@ -14,6 +14,8 @@ import ItemDetail from './Components/ItemDetail/ItemDetail'
 import GotoCart from './Components/GotoCart/GotoCart'
 import Checkout from './Components/Checkout/Checkout'
 import Confirmation from './Components/Confirmation/Confirmation'
+import ProfileMenu from './Components/MyProfile/Menu/ProfileMenu'
+import GeneralOverview from './Components/MyProfile/GeneralOverview'
 
 import './App.css'
 
@@ -21,6 +23,10 @@ const GOOGLE_CLIENT_ID = "868079069835-t3o8eupkk1cvv66nve7aoisddu6mfp2g.apps.goo
 
 function App() {
   const location = useLocation();
+
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, [location.pathname]);
 
   return (
     <GoogleOAuthProvider clientId={GOOGLE_CLIENT_ID}>
@@ -37,6 +43,8 @@ function App() {
         <Route path="/confirmation" element={<Confirmation />} />
         <Route path="/login" element={<Login />} />
         <Route path="/signup" element={<Signup />} />
+        <Route path="/profile" element={<ProfileMenu />} />
+        <Route path="/overview" element={<GeneralOverview />} />
       </Routes>
     </GoogleOAuthProvider>
   )
