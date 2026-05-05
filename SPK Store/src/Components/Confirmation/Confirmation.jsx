@@ -39,7 +39,7 @@ const Confirmation = () => {
     ];
 
     return (
-        <Box sx={{ minHeight: '100vh', display: 'flex', flexDirection: 'column', bgcolor: '#fff', ml: { xs: 2 } }}>
+        <Box sx={{ minHeight: '100vh', display: 'flex', flexDirection: 'column', bgcolor: '#fff' }}>
             <NavBar />
 
             <Container maxWidth="lg" sx={{ mt: { xs: 4, md: 8 }, mb: 8, flex: 1 }}>
@@ -70,7 +70,7 @@ const Confirmation = () => {
                 <Grid container spacing={4}>
                     {/* Left Column: Order Information & Shipping details */}
                     <Grid item xs={12} md={4}>
-                        <Box sx={{ mb: 6 }}>
+                        <Box sx={{ mb: 6,ml:{xs:1} }}>
                             <Box sx={{ display: 'flex', alignItems: 'center', gap: 1.5, mb: 6 }}>
                                 <Typography variant="h6" sx={{ fontFamily: 'Poppins', fontWeight: 700, fontSize: '24px', color: '#000' }}>
                                     Order information
@@ -89,7 +89,7 @@ const Confirmation = () => {
                                 </Box>
                             </Box>
 
-                            <Box sx={{ mt: 2 }}>
+                            <Box sx={{ mt:{ md:14,xs:2} }}>
                                 <Typography variant="h5" sx={{ fontFamily: 'Poppins', fontWeight: 700, mb: 3, fontSize: '20px' }}>
                                     Shipping details
                                 </Typography>
@@ -104,7 +104,7 @@ const Confirmation = () => {
 
                     {/* Middle Column: Order Metadata */}
                     <Grid item xs={12} md={4}>
-                        <Box sx={{ mt: { md: 10 } }}>
+                        <Box sx={{ ml: { md: 7,xs:1 } }}>
                             {[
                                 { label: 'Time placed', value: orderData.timePlaced },
                                 { label: 'Order number', value: orderData.orderNumber },
@@ -135,7 +135,7 @@ const Confirmation = () => {
 
                     {/* Right Column: Payment information */}
                     <Grid item xs={12} md={4}>
-                        <Box sx={{ ml: { md: 4 } }}>
+                        <Box sx={{ ml: { md: 5,xs:1 } }}>
                             <Typography variant="h5" sx={{ fontFamily: 'Poppins', fontWeight: 700, mb: 4, fontSize: '20px' }}>
                                 Payment information
                             </Typography>
@@ -163,7 +163,7 @@ const Confirmation = () => {
                 </Grid>
 
                 {/* Related Products Section */}
-                <Box sx={{ mt: 10 }}>
+                <Box sx={{ mt: 2 }}>
                     <Typography sx={{ fontFamily: 'Poppins', fontWeight: 700, fontSize: '18px', mb: 4 }}>
                         Related Products
                     </Typography>
@@ -190,9 +190,9 @@ const Confirmation = () => {
                     </Box>
                 </Box>
             </Container>
-           <Box sx={{ml:{md:-2}}}>
+           
              <Footer />
-           </Box>
+           
             
         </Box>
     );

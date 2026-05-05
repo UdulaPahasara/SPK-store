@@ -44,7 +44,7 @@ const CardDetail = () => {
                     size="small"
                     sx={{
                         '& .MuiOutlinedInput-root': {
-                            bgcolor: '#F5F5F5',
+                            bgcolor: '#E0E0E0',
                             borderRadius: '8px',
                             '& fieldset': { border: 'none' }
                         },
@@ -70,7 +70,7 @@ const CardDetail = () => {
                     size="small"
                     sx={{
                         '& .MuiOutlinedInput-root': {
-                            bgcolor: '#F5F5F5',
+                            bgcolor: '#E0E0E0',
                             borderRadius: '8px',
                             '& fieldset': { border: 'none' }
                         },
@@ -98,7 +98,7 @@ const CardDetail = () => {
                         size="small"
                         sx={{
                             '& .MuiOutlinedInput-root': {
-                                bgcolor: '#F5F5F5',
+                                bgcolor: '#E0E0E0',
                                 borderRadius: '8px',
                                 '& fieldset': { border: 'none' }
                             },
@@ -122,7 +122,7 @@ const CardDetail = () => {
                         size="small"
                         sx={{
                             '& .MuiOutlinedInput-root': {
-                                bgcolor: '#F5F5F5',
+                                bgcolor: '#E0E0E0',
                                 borderRadius: '8px',
                                 '& fieldset': { border: 'none' }
                             },

@@ -10,6 +10,7 @@ import cashOnDeliveryImg from '../../assets/Checkout/CashOnDelevery.webp';
 import card1 from '../../assets/Checkout/card1.webp';
 import card2 from '../../assets/Checkout/card2.webp';
 import card3 from '../../assets/Checkout/card3.webp';
+import payment from '../../assets/Checkout/payment.webp';
 import CardDetail from './CheckoutDetail/CardDetail';
 import BankDetail from './CheckoutDetail/BankDetail';
 import CashOnDeliveryDetail from './CheckoutDetail/CashOnDeliveryDetail';
@@ -428,9 +429,9 @@ const Checkout = () => {
                             >
                                 <Box
                                     component="img"
-                                    src={card3}
-                                    alt="card icon"
-                                    sx={{ width: '20px', height: '14px', objectFit: 'contain', filter: 'brightness(0) invert(1)' }}
+                                    src={payment}
+                                    alt="payment icon"
+                                    sx={{ width: '31px', height: '25px', objectFit: 'contain' }}
                                 />
                                 Confirm and pay
                             </Button>
